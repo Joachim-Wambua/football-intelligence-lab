@@ -25,7 +25,7 @@ bounded cache sizes. Reload after a temporary connection failure.
 ## Structure
 
 - `src/data_loader.py`: public StatsBomb match and event requests.
-- `src/datasets.py`: shared source interface, StatsBomb adapter, and local BVB adapter.
+- `src/datasets.py`: shared source interface, StatsBomb adapter, and local Bayer Leverkusen data adapter.
 - `src/metrics.py`: team pass filtering, coordinate extraction, completion metrics.
 - `src/visualizations.py`: passing map returning a Matplotlib figure.
 - `app.py`: cached loading, match/team controls, metrics, chart, and error messages.
