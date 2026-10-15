@@ -22,12 +22,79 @@ The first request needs internet access; no StatsBomb account or API key is
 required. Matches and event tables are cached in Streamlit for one hour, with
 bounded cache sizes. Reload after a temporary connection failure.
 
+## Next.js frontend
+
+`frontend/` contains the TypeScript Next.js App Router dashboard with Tailwind CSS.
+It lives alongside FastAPI and the unchanged Streamlit research application.
+Use Node.js 22.12+ (or a current Node LTS) and npm. From the repository root,
+start FastAPI in one terminal using the command below; in a second terminal:
+
+```powershell
+cd frontend
+npm ci
+Copy-Item .env.example .env.local
+npm run dev
+```
+
+Open **http://localhost:3000**. The default API base is
+`http://127.0.0.1:8000/api/v1`; change `NEXT_PUBLIC_API_BASE_URL` in `.env.local`
+and restart Next.js to override it. This public variable contains no secrets and
+is embedded at build time. Requests run in the browser; use localhost:3000 because
+the API's development CORS deliberately excludes other origins. Keep the frontend
+and API on the same machine for these defaults. Do not publish this configuration
+unchanged to a remote host.
+
+```powershell
+npm test
+npm run typecheck
+npm run build
+npm start
+```
+
+The frontend provides competition/season, match, team and player selection;
+team metric cards; shot-count comparison; a player statistics table; and an SVG
+passing map. It defaults to Bundesliga 2023/24 when available. Selections remount
+dependent panels to avoid stale match/team/player context. SWR caches each endpoint
+by its complete path and exposes loading, retry and empty states. Zod schemas in
+`frontend/lib/contracts.ts` check responses against the FastAPI contracts. Null xG
+is displayed as unavailable, not zero. All analytical results and completion flags
+come from Python; JavaScript only formats values and draws API-provided records.
+The API does not yet expose shot coordinates or progressive passing, so this
+frontend shows aggregate shots and basic passing rather than reimplementing those
+analyses. Streamlit retains those research features.
+
+Themes use semantic CSS variables in `frontend/app/globals.css`: background,
+surfaces, foreground, muted text, border, accent, focus, pitch, and chart outcomes.
+Dark Tactical Intelligence uses charcoal surfaces, pitch greens and restrained
+yellow accents. Light Modern SaaS uses white/gray surfaces, dark type and yellow
+controls with dark text. Outcome strokes adapt to both palettes. Completed passes
+are solid arrows; incomplete passes are dashed, with textual legends and SVG
+descriptions. Shot goals use a striped bar as well as a distinct color. Tables
+provide a numeric alternative to charts. The passing map reports omitted
+coordinates, and it does not classify passes itself.
+
+`next-themes` sets `defaultTheme="system"`, `enableSystem`, and `attribute="class"`.
+Light/Dark/System buttons persist the override under localStorage `fil-theme`;
+System continues to follow OS preference changes. The provider's inline startup
+script applies the stored/system theme before paint. Only the root `<html>`
+suppresses its expected theme-attribute hydration difference; theme controls use
+identical disabled SSR/initial-client markup until mounted. SVG colors use CSS
+tokens directly and do not wait for JavaScript to discover the current theme.
+
+Accessibility includes a skip link, labeled native selectors, keyboard focus
+indicators, a responsive disclosure navigation, pressed-state theme buttons,
+reduced-motion-aware scrolling, table row/column headers, SVG descriptions and
+live loading/error states. Component tests cover theme persistence/system defaults,
+server-safe markup, mobile navigation, patterned pass outcomes, missing coordinates,
+API loading and retry, contract rejection and player selection. Browser-based
+visual, hydration and screen-reader checks should supplement these tests.
+
 ## Sprint 1: hybrid Streamlit and FastAPI architecture
 
 Streamlit remains the research interface and imports `src` directly. The new
 FastAPI adapter also uses `StatsBombSource` and the same `src.metrics` functions;
 there is no second analytics implementation or change to the Streamlit script.
-No Next.js application is included yet.
+The Next.js frontend now consumes this API; Streamlit continues to use Python directly.
 
 Install/update dependencies, then run these in separate terminals from the root:
 
