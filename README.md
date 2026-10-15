@@ -126,6 +126,54 @@ completion semantics to another provider without converting its outcomes first.
 
 ## Tests
 
+### Progressive passing
+
+The existing Analysis selector now includes Progressive passing, with a configurable
+threshold, player comparison table, stacked count chart and team/player pass map.
+The frontend stays in the existing Streamlit script. Analytics live in
+`src/progressive.py`, and figures in `src/progressive_visualizations.py`; neither
+imports Streamlit or performs data loading.
+
+The attacking goal centre is **(120, 40)**. For a point `(x, y)`:
+
+```text
+d_sb = sqrt((120 - x)^2 + (40 - y)^2)
+d_m  = sqrt(((120 - x) * L/120)^2 + ((40 - y) * W/80)^2)
+progression = distance(start) - distance(end)
+```
+
+`distance_to_goal(location)` returns raw StatsBomb units. Passing a
+`ProgressionConfig` returns metres-equivalent, assuming pitch dimensions `L=105`
+and `W=68` metres by default. These are estimates on an assumed pitch, not measured
+match distances. Scale each axis **before** computing the Euclidean norm; do not
+multiply the raw norm by one conversion factor. Both raw and scaled distances and
+signed reductions are retained in the prepared pass table.
+
+Default classification is **progression_m >= 10.0**, inclusive. This is an explicit
+project definition, not a claimed StatsBomb or other provider standard. Configure
+`ProgressionConfig(threshold_m=..., pitch_length_m=..., pitch_width_m=...)` in Python;
+the UI exposes the threshold and states the default pitch assumption. All parameters
+must be finite and positive. All pass types and recorded periods remain included.
+
+`progressive` describes geometry regardless of outcome; `completed_progressive`
+requires both qualifying geometry and StatsBomb completion semantics. Incomplete
+passes use their recorded endpoints and describe attempted progression, not retained
+possession or value created. Backward reductions remain negative. A lateral pass can
+qualify if it moves sufficiently closer to the goal centre; a positive x gain alone
+does not guarantee qualification. No additional forward-x constraint is imposed.
+
+Malformed endpoints (not exactly two numeric, nonboolean, finite, in-bounds
+coordinates) give missing progression, `valid_geometry=False`, and False flags.
+They are unclassified, rather than known nonprogressive. All attempts stay in the
+comparison denominator; valid geometry counts expose coverage. Named passers only
+appear in the table; players with no passes are absent. Net progression sums signed
+reductions for both outcomes and is missing when no geometry is valid. This is not
+completed progression or per-90 output. Maps show only qualifying attempts with
+separate completed/incomplete colors. The count chart splits the same categories.
+
+Future BVB adapters must supply the same attacking-left-to-right StatsBomb coordinate
+convention and normalized outcomes before using these functions.
+
 ```powershell
 .venv\Scripts\python.exe -m pytest -q
 ```

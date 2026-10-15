@@ -38,6 +38,11 @@ def test_team_selection(monkeypatch):
         app.segmented_control[1].set_value("Player statistics").run()
         assert not app.exception
         assert len(app.dataframe) == 1
+        app.segmented_control[1].set_value("Progressive passing").run()
+        assert not app.exception
+        assert app.dataframe[0].value.iloc[0]["Progressive attempts"] == 0
+        app.number_input[0].set_value(1.0).run()
+        assert not app.exception
         app.selectbox[1].select(1).run()
         assert not app.exception
         assert app.selectbox[2].value == 2

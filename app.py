@@ -5,6 +5,8 @@ import streamlit as st
 from src.datasets import StatsBombSource, LocalDatasetSource
 from src.metrics import select_passes, passing_summary, select_shots, player_statistics
 from src.visualizations import passing_map, shot_map
+from src.progressive import ProgressionConfig, progressive_passes, player_progression_comparison
+from src.progressive_visualizations import progressive_map, progression_comparison_chart
 
 st.set_page_config(page_title="Football Intelligence Lab", layout="wide")
 st.title("Football Intelligence Lab")
@@ -77,7 +79,7 @@ with st.container(horizontal=True):
     st.metric("Team passes attempted", summary["attempted"])
     st.metric("Team passes completed", summary["completed"])
     st.metric("Team completion rate", f"{summary['completion_pct']:.1f}%")
-view = st.segmented_control("Analysis", ["Player passing", "Team shots", "Player statistics"], default="Player passing", required=True)
+view = st.segmented_control("Analysis", ["Player passing", "Team shots", "Player statistics", "Progressive passing"], default="Player passing", required=True)
 if view == "Player passing":
     players = player_statistics(events, team)["Player"].tolist()
     if not players:
@@ -109,6 +111,29 @@ elif view == "Team shots":
     if omitted:
         st.info(f"{omitted} shots omitted from map due to invalid coordinates; statistics include them.")
     st.caption("Marker area scales with provider xG. Unknown xG uses minimum marker size.")
+elif view == "Progressive passing":
+    threshold = st.number_input("Minimum distance-to-goal reduction (m equivalent)",
+                                min_value=0.1, value=10.0, step=0.5)
+    config = ProgressionConfig(threshold_m=threshold)
+    passes = progressive_passes(events, team, config)
+    comparison = player_progression_comparison(passes)
+    st.caption("Assumed 105 x 68 m pitch. Inclusive distance-reduction threshold; geometric attempts include incomplete passes.")
+    st.write(f"{int(passes.valid_geometry.sum())}/{len(passes)} passes have valid geometry.")
+    st.dataframe(comparison, hide_index=True, alt="Player progressive passing comparison and geometry coverage")
+    fig = progression_comparison_chart(comparison)
+    try:
+        st.pyplot(fig, alt="Completed and incomplete progressive pass counts by player")
+    finally:
+        plt.close(fig)
+    players = comparison["Player"].tolist()
+    selected_player = st.selectbox("Progression player", ["All players", *players])
+    mapped = passes if selected_player == "All players" else passes.loc[passes.player.eq(selected_player)]
+    fig = progressive_map(mapped, f"{team} - {selected_player} - progressive passes")
+    try:
+        st.pyplot(fig, alt="Qualifying progressive passes colored by completion")
+    finally:
+        plt.close(fig)
+    st.caption("Rate denominator: all attempted passes. Net progression includes backward and incomplete passes. See README for definition.")
 else:
     st.dataframe(player_statistics(events, team), hide_index=True, alt="Selected team player event statistics")
     st.caption("Players with recorded events only. No minutes or per-90 estimates. Unknown xG is blank.")
