@@ -22,7 +22,90 @@ The first request needs internet access; no StatsBomb account or API key is
 required. Matches and event tables are cached in Streamlit for one hour, with
 bounded cache sizes. Reload after a temporary connection failure.
 
-## Structure
+## Sprint 1: hybrid Streamlit and FastAPI architecture
+
+Streamlit remains the research interface and imports `src` directly. The new
+FastAPI adapter also uses `StatsBombSource` and the same `src.metrics` functions;
+there is no second analytics implementation or change to the Streamlit script.
+No Next.js application is included yet.
+
+Install/update dependencies, then run these in separate terminals from the root:
+
+```powershell
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe -m streamlit run app.py
+```
+
+```powershell
+.venv\Scripts\python.exe -m uvicorn backend.api.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Streamlit uses its printed local URL (normally port 8501). FastAPI interactive
+contracts are at http://127.0.0.1:8000/docs and machine-readable OpenAPI at
+http://127.0.0.1:8000/openapi.json. API routes use `/api/v1`:
+
+| GET path | Response |
+| --- | --- |
+| `/health` | `{"status":"ok"}`; liveness, no provider call |
+| `/competitions` | Array of competition-season pairs with IDs and labels |
+| `/matches?competition_id=9&season_id=281` | Array of matches, dates, team names and nullable scores |
+| `/matches/{match_id}/summary` | Match ID, event count and event-observed team IDs/names, passing summaries, shot goals, shot counts, recorded xG and coverage |
+| `/matches/{match_id}/teams/{team_id}/players` | Player IDs/names and the existing descriptive player statistics |
+| `/matches/{match_id}/players/{player_id}/passes` | Pass IDs, nullable clock/period, completion flag and nullable `x`, `y`, `end_x`, `end_y` |
+
+For example:
+
+```powershell
+Invoke-RestMethod 'http://127.0.0.1:8000/api/v1/matches?competition_id=9&season_id=281'
+```
+
+Obtain match IDs from matches, team IDs from summary, and player IDs from the team
+player endpoint. All IDs must be positive integers; invalid parameters return
+FastAPI's standard **422** validation response. Unknown competition-season pairs,
+matches, teams or players return **404**. A known player with no passes or known
+season with no matches returns `[]`. Player membership is based on named events,
+not a complete lineup; a player with no recorded events cannot be looked up.
+
+Pydantic contracts in `backend/api/schemas.py` explicitly select output fields.
+Missing pandas values, NaN and positive/negative infinity serialize to JSON `null`;
+unknown measurements never become fabricated zeros. Finite coordinates are those
+prepared by the shared pass filter. Dates serialize as ISO strings. Extra provider
+fields are excluded. Summary `shot_goals` excludes own goals and is not a final
+score; xG totals cover recorded values only, accompanied by `shots_with_xg`.
+The match-list scores are provider score metadata. Player xG and completion
+semantics match the existing Streamlit statistics documented below.
+
+Provider HTTP 404 maps to 404, timeouts to **504**, and other provider failures
+(including rate limits) to **502**. Invalid provider response schemas also return
+502. Error bodies have `{"detail":"..."}` without provider secrets or tracebacks.
+The API does not add retries or authentication in this development sprint.
+
+`backend/api/provider.py` supplies a lazy dependency with a thread-safe,
+**one-hour TTL, 64-entry maximum** in-memory cache for successful catalogue and
+event requests. Keys include operation and IDs. Failures are not cached. Returned
+frames isolate scalar-column mutations; nested coordinate lists are read-only by
+convention. A simple lock spans cache misses, trading concurrent cold loads for
+avoiding duplicate downloads. Cache state is per process, cleared on restart;
+multi-worker deployments do not share it. Statsbombpy may also use its own HTTP
+cache. The API cache does not import or depend on Streamlit.
+
+Development CORS permits **only `http://localhost:3000`**, GET requests and the
+Accept/Content-Type headers. Credentials and wildcard origins are disabled.
+`127.0.0.1:3000`, HTTPS and other ports are separate origins and are not allowed.
+CORS is a browser rule, not access control. This sprint runs the API on loopback.
+
+New modules: `main.py` configures the app, `routes.py` adapts shared functions,
+`schemas.py` declares response contracts, `serialization.py` normalizes pandas
+records, and `provider.py` handles requests/cache. API tests mock the data source,
+exercise JSON nulls and IDs, errors, CORS, cache expiry/eviction and isolation.
+
+Run all API and existing Streamlit/analytics tests:
+
+```powershell
+.venv\Scripts\python.exe -m pytest -q
+```
+
+## Module layout
 
 - `src/data_loader.py`: public StatsBomb match and event requests.
 - `src/datasets.py`: shared source interface, StatsBomb adapter, and local Bayer Leverkusen data adapter.
