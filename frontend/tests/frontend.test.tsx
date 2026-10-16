@@ -14,14 +14,19 @@ import type { Pass } from "@/lib/contracts";
 
 const team = { team_id: 10, team: "A", passing: { attempted: 3, completed: 2, completion_pct: 66.7 }, shots: 2, shot_goals: 1, recorded_xg: null, shots_with_xg: 0 };
 const player = { player_id: 100, player: "Player A", passes: 3, completed_passes: 2, pass_completion_pct: 66.7, shots: 2, goals: 1, xg: null, successful_dribbles: 1, successful_interceptions: 0 };
-const pass: Pass = { id: "p", completed: true, x: 10, y: 20, end_x: 30, end_y: 40 };
+const pass: Pass = { id: "p", completed: true, x: 10, y: 20, end_x: 30, end_y: 40,
+  valid_geometry: true, start_distance_sb: 110, end_distance_sb: 90, start_distance_m: 96.25, end_distance_m: 78.75,
+  progression_sb: 20, progression_m: 17.5, progressive: true, completed_progressive: true };
+const progression = { match_id: 1, team_id: 10, definition: { threshold_m: 10, pitch_length_m: 105, pitch_width_m: 68, goal_x: 120, goal_y: 40, comparison: "greater_than_or_equal" },
+  players: [{ rank: 1, player_id: 100, player: "Player A", passes: 3, valid_geometry: 2, progressive_attempts: 2, completed_progressive: 1, progressive_pct: 66.7, net_progression_m: 17.5 }] };
 const fixtures: Record<string, unknown> = {
   "/competitions": [{ competition_id: 9, season_id: 281, competition_name: "Bundesliga", season_name: "2023/24" }],
   "/matches?competition_id=9&season_id=281": [{ match_id: 1, match_date: "2024-01-01", home_team: "A", away_team: "B", home_score: 1, away_score: 0 }],
   "/matches/1/summary": { match_id: 1, event_count: 20, teams: [team] },
   "/matches/1/teams/10/players": [player, { ...player, player_id: 101, player: "Player B" }],
-  "/matches/1/players/100/passes": [pass],
-  "/matches/1/players/101/passes": [],
+  "/matches/1/teams/10/progressive-passing": progression,
+  "/matches/1/players/100/passes?threshold_m=10": [pass],
+  "/matches/1/players/101/passes?threshold_m=10": [],
 };
 function mockApi() {
   vi.stubGlobal("fetch", vi.fn(async (url: string) => new Response(JSON.stringify(fixtures[url.split("/api/v1")[1]]), { status: 200 })));
@@ -65,8 +70,8 @@ it("exposes mobile navigation state and closes it on navigation", async () => {
 
 it("renders solid/dashed pass outcomes and omits missing coordinates", () => {
   const { container } = render(<PassingPitch player="Player A" passes={[pass, { ...pass, id: "q", completed: false }, { ...pass, x: null }]}/>);
-  expect(screen.getByRole("img")).toHaveAccessibleName(/Player A passing map/);
-  expect(container.querySelectorAll("line")).toHaveLength(2);
+  expect(screen.getByRole("group", { name: /Player A passing map/ })).toBeInTheDocument();
+  expect(container.querySelectorAll("line[data-pass]")).toHaveLength(2);
   expect(container.querySelector("line[stroke-dasharray]")).toBeTruthy();
   expect(screen.getByText(/1 passes omitted/)).toBeInTheDocument();
 });
@@ -76,9 +81,9 @@ it("loads API metrics without replacing null xG and switches player passes", asy
   const user = userEvent.setup();
   dashboard();
   expect(screen.getByRole("status")).toHaveTextContent("Loading available competitions");
-  expect(await screen.findByRole("img", { name: /Player A passing map/ })).toBeInTheDocument();
+  expect(await screen.findByRole("group", { name: /Player A passing map/ })).toBeInTheDocument();
   expect(screen.getAllByText("Unavailable").length).toBeGreaterThan(0);
-  expect(screen.getByRole("table")).toHaveTextContent("66.7%");
+  expect(screen.getByRole("table", { name: /Player performance/ })).toHaveTextContent("66.7%");
   await user.selectOptions(screen.getByLabelText("Player"), "101");
   expect(await screen.findByText("No passes recorded for this player.")).toBeInTheDocument();
 });
@@ -106,9 +111,9 @@ it("clears match and player content when a different season has no matches", asy
   ], "/matches?competition_id=9&season_id=282": [] };
   vi.stubGlobal("fetch", vi.fn(async (url: string) => new Response(JSON.stringify(data[url.split("/api/v1")[1] as keyof typeof data]))));
   dashboard();
-  await screen.findByRole("img", { name: /Player A passing map/ });
+  await screen.findByRole("group", { name: /Player A passing map/ });
   await userEvent.selectOptions(screen.getByLabelText("Competition and season"), "9:282");
   expect(await screen.findByRole("heading", { name: "No matches available" })).toBeInTheDocument();
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
-  expect(screen.queryByRole("img")).not.toBeInTheDocument();
+  expect(screen.queryByRole("group", { name: /passing map/ })).not.toBeInTheDocument();
 });

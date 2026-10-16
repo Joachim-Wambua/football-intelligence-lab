@@ -70,6 +70,12 @@ class PlayerStatistics(Contract):
 
 
 class Pass(Contract):
+    """Recorded attempt; null progression and false flags mean unclassifiable geometry.
+
+    Progressive is geometric and may be unsuccessful. Completed progressive
+    requires both the progressive and completed flags.
+    """
+
     id: str | None = None
     minute: int | None = None
     second: int | None = None
@@ -79,3 +85,44 @@ class Pass(Contract):
     y: float | None
     end_x: float | None
     end_y: float | None
+    valid_geometry: bool
+    start_distance_sb: float | None
+    end_distance_sb: float | None
+    start_distance_m: float | None
+    end_distance_m: float | None
+    progression_sb: float | None
+    progression_m: float | None
+    progressive: bool
+    completed_progressive: bool
+
+
+class ProgressionDefinition(Contract):
+    """The precise assumptions used to classify the returned records."""
+
+    threshold_m: float
+    pitch_length_m: float
+    pitch_width_m: float
+    goal_x: int = 120
+    goal_y: int = 40
+    comparison: Literal["greater_than_or_equal"] = "greater_than_or_equal"
+
+
+class PlayerProgression(Contract):
+    """Named passer totals; net progression is signed, across both outcomes."""
+
+    rank: int
+    player_id: int
+    player: str
+    passes: int
+    valid_geometry: int
+    progressive_attempts: int
+    completed_progressive: int
+    progressive_pct: float
+    net_progression_m: float | None
+
+
+class TeamProgression(Contract):
+    match_id: int
+    team_id: int
+    definition: ProgressionDefinition
+    players: list[PlayerProgression]
