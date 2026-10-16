@@ -3,9 +3,10 @@ import { useState } from "react";
 import useSWR from "swr";
 import { z } from "zod";
 import { apiGet } from "@/lib/api";
-import { competitionSchema, matchSchema, summarySchema, playerSchema, passSchema, type Competition, type Team, type Player } from "@/lib/contracts";
+import { competitionSchema, matchSchema, summarySchema, playerSchema, type Competition, type Team } from "@/lib/contracts";
 import { ErrorState, LoadingState, MetricCard, Panel, SelectField } from "./ui";
-import { PassingPitch, ShotComparison } from "./charts";
+import { ShotComparison } from "./charts";
+import { ProgressivePassing } from "./progressive-passing";
 
 const options = { shouldRetryOnError: false, revalidateOnFocus: false };
 
@@ -68,12 +69,5 @@ function Players({ matchId, team }: { matchId: number; team: Team }) {
   return <><Panel id="players" title="Player comparison" subtitle={`${team.team} · Event-observed players only; no per-90 estimates`}>
     <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Scrollable player comparison"><table className="w-full text-sm"><caption className="sr-only">Player performance for {team.team}. Missing xG is shown as unavailable.</caption><thead><tr>{["Player", "Passes", "Completed", "Completion", "Shots", "Goals", "xG", "Dribbles won", "Interceptions won"].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{query.data.map(item => <tr key={item.player_id}><th scope="row" className="text-foreground normal-case">{item.player}</th><td>{item.passes}</td><td>{item.completed_passes}</td><td>{item.pass_completion_pct.toFixed(1)}%</td><td>{item.shots}</td><td>{item.goals}</td><td>{item.xg?.toFixed(2) ?? "Unavailable"}</td><td>{item.successful_dribbles}</td><td>{item.successful_interceptions}</td></tr>)}</tbody></table></div>
   </Panel>
-  <Panel id="passes" title="Passing intelligence" subtitle="Explore a player’s recorded passing decisions."><SelectField label="Player" value={player.player_id} onChange={value => setSelected(Number(value))}>{query.data.map(item => <option key={item.player_id} value={item.player_id}>{item.player}</option>)}</SelectField><div className="mt-5"><Passes key={player.player_id} matchId={matchId} player={player}/></div></Panel></>;
-}
-
-function Passes({ matchId, player }: { matchId: number; player: Player }) {
-  const query = useSWR(`/matches/${matchId}/players/${player.player_id}/passes`, path => apiGet(path, z.array(passSchema)), options);
-  if (query.error) return <ErrorState message={query.error.message} retry={() => void query.mutate()}/>;
-  if (!query.data) return <LoadingState label="Loading player passes…"/>;
-  return <PassingPitch passes={query.data} player={player.player}/>;
+  <ProgressivePassing matchId={matchId} teamId={team.team_id} players={query.data} player={player} onSelectPlayer={setSelected}/></>;
 }

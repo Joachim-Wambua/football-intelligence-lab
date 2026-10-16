@@ -169,3 +169,78 @@ def test_json_safe_nested_records():
     assert converted[0]["c"] is None
     assert converted[0]["d"] == [None, 1]
     json.dumps(converted, allow_nan=False)
+
+
+@pytest.fixture
+def progression_events(source):
+    """Centreline examples with exact scaled differences; all belong to team A."""
+    base = {"type": "Pass", "team": "A", "team_id": 10, "player": "Same name", "player_id": 100}
+    source.events.return_value = pd.DataFrame([
+        {**base, "location": [40, 40], "pass_end_location": [60, 40]},  # +17.5m
+        {**base, "location": [40, 40], "pass_end_location": [60, 40], "pass_outcome": "Incomplete"},
+        {**base, "location": [60, 40], "pass_end_location": [40, 40]},  # -17.5m
+        {**base, "location": [60, 20], "pass_end_location": [60, 60]},  # lateral 0
+        {**base, "location": [1, 2, 3], "pass_end_location": [60, 40]},  # malformed
+        {**base, "player_id": 101, "location": [40, 40], "pass_end_location": [80, 40]},
+        {**base, "player_id": 102, "player": "Unknown geometry", "location": None},
+        {**base, "player_id": 103, "player": "No passes", "type": "Shot", "location": [100, 40]},
+    ])
+    return source.events.return_value
+
+
+def test_progressive_flags_and_threshold(client, progression_events):
+    path = "/api/v1/matches/1/players/100/passes"
+    response = client.get(path + "?threshold_m=17.5")
+    assert response.status_code == 200
+    passes = response.json()
+    assert [p["progressive"] for p in passes] == [True, True, False, False, False]
+    assert [p["completed_progressive"] for p in passes] == [True, False, False, False, False]
+    assert [p["progression_m"] for p in passes[:4]] == [17.5, 17.5, -17.5, 0]
+    assert passes[0]["progression_sb"] == 20
+    assert passes[4]["valid_geometry"] is False
+    assert passes[4]["progression_m"] is None
+    assert not any(p["progressive"] for p in client.get(path + "?threshold_m=17.5001").json())
+    assert client.get("/api/v1/matches/1/players/103/passes").json() == []
+
+
+def test_progressive_rankings_and_identity(client, progression_events, source):
+    path = "/api/v1/matches/1/teams/10/progressive-passing"
+    response = client.get(path)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["definition"] == {"threshold_m": 10, "pitch_length_m": 105, "pitch_width_m": 68,
+        "goal_x": 120, "goal_y": 40, "comparison": "greater_than_or_equal"}
+    rows = data["players"]
+    assert [p["rank"] for p in rows] == [1, 2, 3]
+    assert [p["player_id"] for p in rows] == [100, 101, 102]  # same name, distinct IDs
+    assert rows[0]["passes"] == 5
+    assert rows[0]["valid_geometry"] == 4
+    assert rows[0]["progressive_attempts"] == 2
+    assert rows[0]["completed_progressive"] == 1
+    assert rows[0]["progressive_pct"] == 40
+    assert rows[0]["net_progression_m"] == 17.5
+    assert rows[2]["net_progression_m"] is None
+    high = client.get(path + "?threshold_m=20").json()
+    assert high["players"][0]["player_id"] == 101
+    assert high["definition"]["threshold_m"] == 20
+    source.events.assert_called_once_with(1)  # raw events reused across thresholds
+
+
+@pytest.mark.parametrize("threshold", ["0", "-1", "nan", "inf", "-inf", "bad"])
+@pytest.mark.parametrize("path", ["/matches/1/teams/10/progressive-passing", "/matches/1/players/100/passes"])
+def test_invalid_progression_threshold(client, path, threshold):
+    assert client.get(f"/api/v1{path}?threshold_m={threshold}").status_code == 422
+
+
+def test_progressive_endpoint_errors(client, source):
+    assert client.get("/api/v1/matches/1/teams/999/progressive-passing").status_code == 404
+    assert client.get("/api/v1/matches/0/teams/10/progressive-passing").status_code == 422
+    source.events.side_effect = Timeout()
+    assert client.get("/api/v1/matches/2/teams/10/progressive-passing").status_code == 504
+
+
+def test_progressive_team_with_no_passers(client, source):
+    source.events.return_value = source.events.return_value.loc[source.events.return_value.type.eq("Shot")]
+    response = client.get("/api/v1/matches/1/teams/10/progressive-passing")
+    assert response.status_code == 200
+    assert response.json()["players"] == []

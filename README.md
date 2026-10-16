@@ -59,9 +59,10 @@ by its complete path and exposes loading, retry and empty states. Zod schemas in
 `frontend/lib/contracts.ts` check responses against the FastAPI contracts. Null xG
 is displayed as unavailable, not zero. All analytical results and completion flags
 come from Python; JavaScript only formats values and draws API-provided records.
-The API does not yet expose shot coordinates or progressive passing, so this
-frontend shows aggregate shots and basic passing rather than reimplementing those
-analyses. Streamlit retains those research features.
+The API exposes progressive passing using the existing Python research functions.
+The frontend shows server-ranked players and filters API-owned completion and
+progression flags. Shot coordinates are not yet exposed, so shot views remain
+aggregate. Streamlit retains its research views.
 
 Themes use semantic CSS variables in `frontend/app/globals.css`: background,
 surfaces, foreground, muted text, border, accent, focus, pitch, and chart outcomes.
@@ -118,7 +119,8 @@ http://127.0.0.1:8000/openapi.json. API routes use `/api/v1`:
 | `/matches?competition_id=9&season_id=281` | Array of matches, dates, team names and nullable scores |
 | `/matches/{match_id}/summary` | Match ID, event count and event-observed team IDs/names, passing summaries, shot goals, shot counts, recorded xG and coverage |
 | `/matches/{match_id}/teams/{team_id}/players` | Player IDs/names and the existing descriptive player statistics |
-| `/matches/{match_id}/players/{player_id}/passes` | Pass IDs, nullable clock/period, completion flag and nullable `x`, `y`, `end_x`, `end_y` |
+| `/matches/{match_id}/players/{player_id}/passes?threshold_m=10` | Pass IDs, clock/period, completion, coordinates, signed progression, geometry validity and progressive flags |
+| `/matches/{match_id}/teams/{team_id}/progressive-passing?threshold_m=10` | Definition metadata and server-ordered player progressive-passing rankings |
 
 For example:
 
@@ -276,11 +278,11 @@ completion semantics to another provider without converting its outcomes first.
 
 ## Tests
 
-### Progressive passing
+### Progressive passing: Streamlit, FastAPI and Next.js
 
-The existing Analysis selector now includes Progressive passing, with a configurable
+The Streamlit Analysis selector includes Progressive passing, with a configurable
 threshold, player comparison table, stacked count chart and team/player pass map.
-The frontend stays in the existing Streamlit script. Analytics live in
+Streamlit remains unchanged by the API/Next.js integration. Analytics live in
 `src/progressive.py`, and figures in `src/progressive_visualizations.py`; neither
 imports Streamlit or performs data loading.
 
@@ -323,6 +325,62 @@ separate completed/incomplete colors. The count chart splits the same categories
 
 Future BVB adapters must supply the same attacking-left-to-right StatsBomb coordinate
 convention and normalized outcomes before using these functions.
+
+#### API and Next.js progression contracts
+
+The existing pass-list endpoint now adds required `valid_geometry`,
+`start_distance_sb`, `end_distance_sb`, `start_distance_m`, `end_distance_m`,
+`progression_sb`, `progression_m`, `progressive` and `completed_progressive` fields.
+This is additive for existing JSON consumers; TypeScript validates all new fields.
+Distances ending `_sb` use raw StatsBomb units; `_m` means metres-equivalent under
+the assumed dimensions. Invalid endpoints retain their own null distances and
+force null progression, false validity and false flags. They remain in attempt
+totals and the accessible table; they are omitted from SVG rendering.
+
+Both progression endpoints accept the same optional `threshold_m` query parameter,
+defaulting directly to Python's `ProgressionConfig().threshold_m` (currently 10).
+Zero, negative, nonfinite and nonnumeric thresholds return 422. The ranking envelope
+includes `definition` with the threshold, assumed pitch dimensions, goal centre and
+`comparison="greater_than_or_equal"`. No progression definition was changed.
+Both routes call `progressive_passes`; the rankings also call
+`player_progression_comparison`. Raw event caching remains independent of threshold;
+analytical results are computed using the request's configuration.
+
+Ranking rows include `rank`, `player_id`, `player`, `passes`, `valid_geometry` count,
+`progressive_attempts`, `completed_progressive`, `progressive_pct` and nullable
+`net_progression_m`. They sort by completed progressive count descending, then
+geometric attempts descending, then numeric player ID ascending. Ranks are ordinal
+positions; tied counts receive deterministic separate positions. Only named passers
+with numeric IDs appear. A known team with no named passers returns `players: []`.
+Grouping by numeric ID before calling the shared comparison prevents equal display
+names from merging different players. Inconsistent names for one ID return a 502
+provider-schema error. The existing general player-statistics adapter still uses
+the research function's name-based aggregation.
+
+The Next.js rankings control starts with the API's default and displays the returned
+definition. Applying a threshold requests fresh rankings and player pass flags with
+the same threshold in both SWR keys. The pitch resets with player/threshold changes.
+The controls expose All, Completed, Unsuccessful and Progressive passes. Progressive
+includes **both completed and unsuccessful geometric attempts**; completed and
+unsuccessful filters depend only on outcome and may include unclassifiable geometry.
+Filtering never recalculates distances, thresholds, completion or ranking in
+TypeScript. The map's finite/bounds checks are rendering guards only.
+
+Hover, keyboard focus, Enter/Space or click an arrow to inspect period/clock,
+outcome, progressive classification, coordinates, signed progression and start/end
+distance to goal. Details stay visible until replaced or cleared; Escape on an arrow
+also clears them. Each arrow has a wider transparent pointer target. The expandable
+pass table provides the same details for all filtered passes, including missing
+coordinates, and buttons to inspect them without using the SVG. Solid/dashed arrows,
+textual classifications, CSS theme tokens and the Light/Dark/System switch are
+preserved; no outcome is communicated using color alone.
+
+Python tests cover the unchanged geometric rules, exact threshold boundaries,
+backward/lateral/incomplete/malformed passes, IDs, ordering, nulls, API validation
+and provider failures. Frontend tests cover all filters, server-owned flags, empty
+results, hover/keyboard/table details, threshold propagation, malformed-coordinate
+omissions, and light/dark/system compatibility. Run the full suites and build using
+the commands above.
 
 ```powershell
 .venv\Scripts\python.exe -m pytest -q
