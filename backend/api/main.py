@@ -8,12 +8,14 @@ from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
 from backend.api.routes import router
+from backend.api.xt_routes import router as xt_router
 
 app = FastAPI(title="Football Intelligence Lab API", version="0.1.0")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000"],
                    allow_methods=["GET"], allow_headers=["Accept", "Content-Type"],
                    allow_credentials=False)
 app.include_router(router, prefix="/api/v1")
+app.include_router(xt_router, prefix="/api/v1")
 
 
 @app.exception_handler(ValidationError)

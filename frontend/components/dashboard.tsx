@@ -7,6 +7,7 @@ import { competitionSchema, matchSchema, summarySchema, playerSchema, type Compe
 import { ErrorState, LoadingState, MetricCard, Panel, SelectField } from "./ui";
 import { ShotComparison } from "./charts";
 import { ProgressivePassing } from "./progressive-passing";
+import { ExpectedThreat } from "./expected-threat";
 
 const options = { shouldRetryOnError: false, revalidateOnFocus: false };
 
@@ -56,7 +57,8 @@ function MatchAnalysis({ matchId }: { matchId: number }) {
       <MetricCard label="Recorded xG" value={team.recorded_xg?.toFixed(2) ?? "Unavailable"} detail={`${team.shots_with_xg}/${team.shots} shots have provider xG`}/>
     </section>
     <Panel title="Attacking output" subtitle="Shot volume and outcomes across both teams"><ShotComparison teams={query.data.teams}/></Panel>
-    <Players key={`${matchId}-${team.team_id}`} matchId={matchId} team={team}/></>;
+    <Players key={`${matchId}-${team.team_id}`} matchId={matchId} team={team}/>
+    <ExpectedThreat key={`xt-${matchId}-${team.team_id}`} matchId={matchId} teamId={team.team_id}/></>;
 }
 
 function Players({ matchId, team }: { matchId: number; team: Team }) {

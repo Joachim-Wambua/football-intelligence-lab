@@ -8,6 +8,7 @@
   --positive: #176344; --negative: #9c3c22;
   --pitch: #edf5ee; --pitch-line: #57745e;
   --chart-complete: #176344; --chart-incomplete: #9c3c22;
+  --xt-low: #edf5ee; --xt-high: #176344;
 }
 .dark {
   color-scheme: dark;
@@ -17,6 +18,7 @@
   --positive: #8bdbac; --negative: #ffb094;
   --pitch: #142d25; --pitch-line: #80a795;
   --chart-complete: #8bdbac; --chart-incomplete: #ffb094;
+  --xt-low: #142d25; --xt-high: #e8c749;
 }
 @theme inline {
   --color-background: var(--background); --color-surface: var(--surface);
