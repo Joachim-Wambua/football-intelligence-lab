@@ -11,6 +11,7 @@ import { Shell } from "@/components/shell";
 import { Dashboard } from "@/components/dashboard";
 import { apiGet } from "@/lib/api";
 import type { Pass } from "@/lib/contracts";
+import { xtModelFixture, xtPlayersFixture } from "./xt-fixtures";
 
 const team = { team_id: 10, team: "A", passing: { attempted: 3, completed: 2, completion_pct: 66.7 }, shots: 2, shot_goals: 1, recorded_xg: null, shots_with_xg: 0 };
 const player = { player_id: 100, player: "Player A", passes: 3, completed_passes: 2, pass_completion_pct: 66.7, shots: 2, goals: 1, xg: null, successful_dribbles: 1, successful_interceptions: 0 };
@@ -20,6 +21,8 @@ const pass: Pass = { id: "p", completed: true, x: 10, y: 20, end_x: 30, end_y: 4
 const progression = { match_id: 1, team_id: 10, definition: { threshold_m: 10, pitch_length_m: 105, pitch_width_m: 68, goal_x: 120, goal_y: 40, comparison: "greater_than_or_equal" },
   players: [{ rank: 1, player_id: 100, player: "Player A", passes: 3, valid_geometry: 2, progressive_attempts: 2, completed_progressive: 1, progressive_pct: 66.7, net_progression_m: 17.5 }] };
 const fixtures: Record<string, unknown> = {
+  "/xt/model": xtModelFixture,
+  "/matches/1/teams/10/xt/players": xtPlayersFixture,
   "/competitions": [{ competition_id: 9, season_id: 281, competition_name: "Bundesliga", season_name: "2023/24" }],
   "/matches?competition_id=9&season_id=281": [{ match_id: 1, match_date: "2024-01-01", home_team: "A", away_team: "B", home_score: 1, away_score: 0 }],
   "/matches/1/summary": { match_id: 1, event_count: 20, teams: [team] },

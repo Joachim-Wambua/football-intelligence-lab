@@ -11,7 +11,7 @@ export async function apiGet<T>(path: string, schema: z.ZodType<T>): Promise<T> 
     throw new Error("Cannot reach the API. Check that FastAPI is running and try again.");
   }
   if (!response.ok) {
-    const messages: Record<number, string> = {404: "This match, team or player is unavailable.", 422: "The API rejected the selection.", 502: "The data provider is temporarily unavailable.", 504: "The data provider timed out."};
+    const messages: Record<number, string> = {404: "This match, team or player is unavailable.", 422: "The API rejected the selection.", 502: "The data provider is temporarily unavailable.", 503: "The experimental xT model is unavailable.", 504: "The data provider timed out."};
     throw new Error(messages[response.status] || `API request failed (${response.status}).`);
   }
   let value: unknown;

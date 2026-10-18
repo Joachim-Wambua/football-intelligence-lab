@@ -1,5 +1,126 @@
 # Sprint 5A: empirical expected threat (artifact schema v1)
 
+## Sprint 5B: serving the frozen research model
+
+**Football question:** which successful passes and observed carries move the ball
+to locations assigned more value by this particular fitted surface? This is a
+model-based description of buildup, not a claim about player quality or a
+prediction of the next possession's outcome.
+
+The artifact is frozen in Sprint 5B; no model is fitted, replaced or updated in
+HTTP handlers. The model SHA256 remains
+`7e8d1d30e10f2f89268c972d8ba9f356038475618b11b256db7d06abdf81daab`.
+The active artifact has six Leverkusen training matches and two held out. **Only
+26 of 192 zones contain observed shots**, even though all zones have some move
+support. A converged surface can therefore still depend on very sparse goal data.
+
+### A worked Bellman update
+
+Suppose a zone has shot probability 0.2, move probability 0.8, and empirical
+goal-given-shot probability 0.1. Successful transitions lead to B with mass 0.5
+and C with mass 0.25; the remaining 0.25 of attempts lose continuation. If the
+previous iteration gives V(B)=0.3 and V(C)=0.1, then:
+
+```text
+V_next = 0.2 × 0.1 + 0.8 × (0.5 × 0.3 + 0.25 × 0.1)
+       = 0.02 + 0.14 = 0.16
+```
+
+Starting with all values zero, the first update is just 0.02. Later updates
+propagate future shooting opportunities through successful moves. This explains
+why a pass into a useful buildup zone can gain xT without ending near goal.
+For a successful movement from a zone worth 0.03 to one worth 0.02, xT is -0.01;
+a movement inside the same zone is a genuine zero. An unsuccessful pass or a
+missing endpoint is **null**, not zero, under our destination-credit convention.
+
+Numerical convergence only means successive Bellman updates differ by at most a
+tolerance for the fitted empirical probabilities. It does not demonstrate that
+those probabilities generalize, are calibrated, or are unbiased. Increasing
+iterations cannot repair sparse shot zones, Leverkusen selection bias, omitted
+possession-ending events or the observed-carry convention. The held-out pipeline
+currently reports scoring coverage only, not a predictive validation score.
+
+### Read-only API contracts
+
+All endpoints are under `/api/v1`; existing endpoints and Streamlit remain intact.
+
+| GET path | Contract |
+| --- | --- |
+| `/xt/model` | Actual grid/surface, per-zone shot counts, coverage, training date, coordinate convention, input hashes, convergence diagnostics and model SHA256 |
+| `/matches/{match_id}/teams/{team_id}/xt/players` | Full-match, ID-grouped player totals with positive xT, signed net xT, rated counts and rated successful pass/carry counts |
+| `/matches/{match_id}/teams/{team_id}/xt/actions?limit=200&offset=0` | Bounded pass/carry attempts, stable event position/ID, team/player IDs, period/clock, coordinates, success and nullable xT |
+
+`limit` is 1–500; `offset` is nonnegative. Optional positive `player_id` filters
+before pagination; absent matching actions return an empty page. `total` counts
+attempts after that filter, not just rated actions. Page filters in the frontend
+apply to the current page and are labeled accordingly; rankings always use all
+team moves. Shots are excluded from action records; unsuccessful, malformed and
+shootout moves remain inspectable with null xT. Unknown player IDs remain null in
+actions and are excluded from rankings. Missing coordinates are not inferred.
+
+`src/xt_summary.py` calls the existing `rate_actions()` for every value. It owns
+aggregation in Python; TypeScript only filters/plots returned records. For
+`+0.03, -0.01, 0, null`, positive xT is 0.03, net xT is 0.02 and rated count is 3.
+Entirely unrated players have null totals. Rated pass/carry counts include only
+successful moves with defined valuation. Rankings sort positive xT descending,
+then net xT descending, then stable player ID; they are not normalized per 90.
+
+`backend/api/xt_model.py` validates surface shape/range, positive grid dimensions,
+finite shot/goal support, convergence diagnostics, disjoint partitions and the
+exact `StatsBomb 120x80 attacking right` contract. Provider events come from the
+existing StatsBomb adapter and are never flipped by team or half. Custom sources
+need a separately verified normalization adapter. Malformed coordinates yield
+null valuations through the shared research engine. No client direction override
+is accepted. The model is cached per process until restart; failed loads are not
+cached. After an intentional artifact deployment restart the API. Request
+parameters cannot select another file. Every response includes the same model
+hash, and the frontend refuses to compare mismatching versions.
+
+Missing/corrupt/incompatible artifacts return safe **503** responses without local
+paths. Existing provider errors retain 404/502/504 mappings. Invalid parameters
+return 422. `/health` remains process liveness, not model/provider readiness.
+
+### Dashboard and verification
+
+The Expected Threat panel renders the actual 16×12 fitted grid. Hover, click or
+keyboard-focus a zone to inspect its value and observed shot count; Enter/Space
+selects it and Escape clears selection. A text table lists all 192 zones. Overlay
+passes are solid and carries dashed, with destination dots; signed values and
+unrated events are available in a table, not communicated by color alone.
+Light/Dark/System controls and persistence are unchanged. Colors use theme tokens;
+color scaling is presentation only, not additional statistical smoothing.
+
+The panel explicitly labels the model **Experimental xT**, displays provenance
+and sparse coverage, and warns that it is not calibrated, broadly representative
+or suitable for definitive scouting assessments. The grid can be inspected even
+when provider requests fail. Overlays are opt-in to avoid an unnecessary event
+download. Model failure stays within this panel; other research views still work.
+
+```powershell
+.venv\Scripts\python.exe -m uvicorn backend.api.main:app --reload --host 127.0.0.1 --port 8000
+# In another terminal:
+cd frontend
+npm ci
+npm run dev
+```
+
+```powershell
+# Repository root:
+.venv\Scripts\python.exe -m pytest -q
+cd frontend
+npm test
+npm run typecheck
+npm run build
+```
+
+Tests use small, readable signed-value examples and the actual checked-in surface.
+They verify null-versus-zero semantics, grouping by IDs, pagination, model
+validation/caching, provider failures, theme behavior, filtering and keyboard/text
+alternatives. These checks verify implementation and accessibility semantics;
+they are not football-model predictive validation or a screen-reader/browser audit.
+
+## Research engine and mathematical definition
+
 The grid follows [Karun Singh's expected-threat formulation](https://karun.in/blog/expected-threat.html).
 For zone i, let S, M, G be eligible shots, move attempts, and shot goals.
 Let C(i,j) count successful moves with valid destination j.
