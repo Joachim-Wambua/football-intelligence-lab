@@ -9,3 +9,6 @@ frontend/.next/
 frontend/coverage/
 *.tsbuildinfo
 .env.local
+
+research/xt-data/
+research/xt/
