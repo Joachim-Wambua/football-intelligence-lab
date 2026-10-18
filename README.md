@@ -401,3 +401,20 @@ follow its logo requirements. The
 [Bundesliga release announcement](https://blogarchive.statsbomb.com/de/neuigkeiten/freie-daten-bayer-leverkusen-bundesliga-meister/)
 describes the coverage and IDs. Plotting follows the
 [mplsoccer passing-arrow API](https://mplsoccer.readthedocs.io/en/latest/gallery/pitch_plots/plot_arrows.html).
+
+## Sprint 5A: Expected Threat research
+
+The offline [xT research guide](docs/expected_threat.md) documents the mathematical
+definition, outcome semantics, coverage limitations and reproduction commands.
+The [versioned artifact](artifacts/xt-v1.json) uses six training and two held-out
+Bundesliga matches from the available Leverkusen sample, not a complete season.
+The experiment produces a heatmap, convergence plot and held-out pass valuations:
+
+```powershell
+.venv\Scripts\python.exe -m src.xt_research path/to/open-data/data --competition 9 --season 281 --limit 8 --held-out 2 --output artifacts/xt-v1.json --report research/xt
+.venv\Scripts\python.exe -m pytest -q
+```
+
+`src/expected_threat.py` supplies the UI-independent grid fitting and nullable
+pass/carry valuation functions. Training is never performed in API requests.
+FastAPI, Next.js and the Streamlit research app remain unchanged by this sprint.
