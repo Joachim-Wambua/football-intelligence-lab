@@ -404,6 +404,40 @@ describes the coverage and IDs. Plotting follows the
 
 ## Sprint 5A: Expected Threat research
 
+Sprint 5B adds a read-only **Expected Threat** panel to Next.js using the frozen
+artifact. It includes an interactive 16×12 grid, shot-support tables, server-ranked
+player xT totals and optional paginated pass/carry overlays. The panel preserves
+negative and zero values and distinguishes unrated/null actions. Its Experimental
+notice explains the six-match training sample and 26/192 shot-observed zones.
+
+Run FastAPI and Next.js in separate terminals (no retraining required):
+
+```powershell
+.venv\Scripts\python.exe -m uvicorn backend.api.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+```powershell
+cd frontend
+npm ci
+npm run dev
+```
+
+Use http://localhost:3000. Read-only endpoints are `/api/v1/xt/model`,
+`/api/v1/matches/{match_id}/teams/{team_id}/xt/players` and
+`/api/v1/matches/{match_id}/teams/{team_id}/xt/actions?limit=200&offset=0`.
+The artifact is validated/cached until API restart; corrupt or missing models
+return 503 and do not disable the other dashboard views. No request fits a model.
+See [the integration contracts and worked example](docs/expected_threat.md).
+
+```powershell
+# From repository root:
+.venv\Scripts\python.exe -m pytest -q
+cd frontend
+npm test
+npm run typecheck
+npm run build
+```
+
 The offline [xT research guide](docs/expected_threat.md) documents the mathematical
 definition, outcome semantics, coverage limitations and reproduction commands.
 The [versioned artifact](artifacts/xt-v1.json) uses six training and two held-out
@@ -417,4 +451,5 @@ The experiment produces a heatmap, convergence plot and held-out pass valuations
 
 `src/expected_threat.py` supplies the UI-independent grid fitting and nullable
 pass/carry valuation functions. Training is never performed in API requests.
-FastAPI, Next.js and the Streamlit research app remain unchanged by this sprint.
+Sprint 5A left FastAPI, Next.js and the Streamlit research app unchanged; Sprint 5B
+now exposes this frozen model through FastAPI and Next.js while preserving Streamlit.
