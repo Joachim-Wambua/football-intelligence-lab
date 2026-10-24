@@ -244,3 +244,71 @@ def test_progressive_team_with_no_passers(client, source):
     response = client.get("/api/v1/matches/1/teams/10/progressive-passing")
     assert response.status_code == 200
     assert response.json()["players"] == []
+
+
+def test_shot_events_and_insights(client):
+    response = client.get('/api/v1/matches/1/shots')
+    assert response.status_code == 200
+    shots = response.json()
+    assert len(shots) == 2
+    assert shots[0]['match_id'] == 1
+    assert shots[0]['player_id'] == 101
+    assert shots[0]['goal'] is True
+    assert shots[0]['xg'] == .3
+    assert shots[0]['period'] is None
+    assert shots[1]['xg'] is None
+    assert len(client.get('/api/v1/matches/1/shots?team_id=10').json()) == 1
+    assert client.get('/api/v1/matches/1/shots?team_id=999').status_code == 404
+    assert client.get('/api/v1/matches/0/shots').status_code == 422
+    assert client.get('/api/v1/matches/1/shots?team_id=-1').status_code == 422
+    data = client.get('/api/v1/matches/1/teams/10/insights')
+    assert data.status_code == 200, data.text
+    observations = {row['metric']: row for row in data.json()['observations']}
+    assert observations['shots']['value'] == 1
+    assert observations['xg_coverage']['denominator'] == 1
+    assert observations['recorded_xg']['value'] == .3
+    assert all(row['definition'] for row in observations.values())
+
+
+def test_shot_missing_geometry_empty_and_model_failure(client, source, monkeypatch):
+    from fastapi import HTTPException
+    from backend.api import workspace
+    def unavailable():
+        raise HTTPException(503, 'Unavailable')
+    monkeypatch.setattr(workspace, 'get_xt_model', unavailable)
+    source.events.return_value.loc[2, 'location'] = None
+    source.events.return_value.loc[2, 'shot_statsbomb_xg'] = -1
+    shot = client.get('/api/v1/matches/1/shots?team_id=10').json()[0]
+    assert shot['x'] is None and shot['y'] is None and shot['xg'] is None
+    data = client.get('/api/v1/matches/1/teams/10/insights').json()
+    assert data['xt_status'] == 'unavailable'
+    assert data['observations'][2]['value'] is None
+    source.events.return_value = source.events.return_value.loc[source.events.return_value.type.eq('Pass')]
+    assert client.get('/api/v1/matches/2/shots').json() == []
+    data = client.get('/api/v1/matches/2/teams/10/insights').json()
+    assert data['observations'][1]['value'] == 0
+    assert data['observations'][1]['denominator'] == 0
+
+def test_shot_probability_and_pitch_boundaries(client, source):
+    """Zero xG is measured, unlike missing xG; pitch edges remain drawable."""
+    base = {'type': 'Shot', 'team': 'A', 'team_id': 10, 'player_id': None}
+    source.events.return_value = pd.DataFrame([
+        {**base, 'location': [0, 0], 'shot_statsbomb_xg': 0, 'period': 5},
+        {**base, 'location': [120, 80], 'shot_statsbomb_xg': 1},
+        {**base, 'location': [121, 40], 'shot_statsbomb_xg': 1.1},
+        {**base, 'location': None, 'shot_statsbomb_xg': None}])
+    shots = client.get('/api/v1/matches/1/shots').json()
+    assert [(row['x'], row['y']) for row in shots[:2]] == [(0, 0), (120, 80)]
+    assert [row['xg'] for row in shots] == [0, 1, None, None]
+    assert shots[0]['period'] == 5
+    assert shots[0]['player_id'] is None
+    assert shots[2]['x'] is None
+
+
+def test_insight_progressive_leader_matches_existing_rankings(client, progression_events):
+    ranking = client.get('/api/v1/matches/1/teams/10/progressive-passing').json()
+    evidence = client.get('/api/v1/matches/1/teams/10/insights').json()
+    leader = next(row for row in evidence['observations'] if row['metric'] == 'completed_progressive_leader')
+    assert leader['player_id'] == ranking['players'][0]['player_id'] == 100
+    assert leader['value'] == 1
+    assert leader['denominator'] == 5

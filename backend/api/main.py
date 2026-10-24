@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
+from backend.api.workspace import router as workspace_router
 from backend.api.routes import router
 from backend.api.xt_routes import router as xt_router
 
@@ -16,6 +17,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000"],
                    allow_credentials=False)
 app.include_router(router, prefix="/api/v1")
 app.include_router(xt_router, prefix="/api/v1")
+app.include_router(workspace_router, prefix="/api/v1")
 
 
 @app.exception_handler(ValidationError)
