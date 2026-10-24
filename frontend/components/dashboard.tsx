@@ -3,11 +3,12 @@ import { useState } from "react";
 import useSWR from "swr";
 import { z } from "zod";
 import { apiGet } from "@/lib/api";
-import { competitionSchema, matchSchema, summarySchema, playerSchema, type Competition, type Team } from "@/lib/contracts";
+import { competitionSchema, matchSchema, summarySchema, playerSchema, type Competition, type Match, type Team } from "@/lib/contracts";
 import { ErrorState, LoadingState, MetricCard, Panel, SelectField } from "./ui";
 import { ShotComparison } from "./charts";
 import { ProgressivePassing } from "./progressive-passing";
 import { MatchWorkspace } from "./match-workspace";
+import { reportHref } from "@/lib/match-report";
 import { ExpectedThreat } from "./expected-threat";
 
 const options = { shouldRetryOnError: false, revalidateOnFocus: false };
@@ -40,10 +41,11 @@ function Matches({ competition }: { competition: Competition }) {
   const match = query.data.find(item => item.match_id === selected) ?? query.data[0];
   return <><SelectField label="Match" value={match.match_id} onChange={value => setSelected(Number(value))}>{query.data.map(item => <option key={item.match_id} value={item.match_id}>{item.match_date} · {item.home_team} vs {item.away_team}</option>)}</SelectField>
     <div className="flex flex-wrap items-center justify-between gap-4"><h2 className="text-xl font-bold">{match.home_team} <span className="text-muted">vs</span> {match.away_team}</h2><p className="rounded-lg bg-raised px-4 py-2 text-lg font-bold tabular-nums" aria-label="Match score">{match.home_score ?? "–"} : {match.away_score ?? "–"}</p></div>
-    <MatchAnalysis key={match.match_id} matchId={match.match_id}/></>;
+    <MatchAnalysis key={match.match_id} match={match} competition={competition}/></>;
 }
 
-function MatchAnalysis({ matchId }: { matchId: number }) {
+function MatchAnalysis({ match, competition }: { match: Match; competition: Competition }) {
+  const matchId = match.match_id;
   const query = useSWR(`/matches/${matchId}/summary`, path => apiGet(path, summarySchema), options);
   const [selected, setSelected] = useState<number>();
   if (query.error) return <ErrorState message={query.error.message} retry={() => void query.mutate()}/>;
@@ -51,6 +53,7 @@ function MatchAnalysis({ matchId }: { matchId: number }) {
   if (!query.data.teams.length) return <Panel title="No team data">No named teams were returned for this match.</Panel>;
   const team = query.data.teams.find(item => item.team_id === selected) ?? query.data.teams[0];
   return <><SelectField label="Team" value={team.team_id} onChange={value => setSelected(Number(value))}>{query.data.teams.map(item => <option key={item.team_id} value={item.team_id}>{item.team}</option>)}</SelectField>
+    <a className="inline-flex min-h-11 items-center rounded-lg bg-accent px-4 font-bold text-accent-foreground" href={reportHref({ matchId, teamId: team.team_id, competitionId: competition.competition_id, seasonId: competition.season_id })}>Open shareable match report</a>
     <section id="overview" aria-label="Team overview" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <MetricCard label="Passes attempted" value={team.passing.attempted} detail={`${team.passing.completed} completed passes`}/>
       <MetricCard label="Pass completion" value={`${team.passing.completion_pct.toFixed(1)}%`} detail="All recorded pass types"/>
