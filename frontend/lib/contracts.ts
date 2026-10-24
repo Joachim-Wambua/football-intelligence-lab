@@ -21,3 +21,7 @@ export type Team = z.infer<typeof teamSchema>;
 export type Player = z.infer<typeof playerSchema>;
 export type Pass = z.infer<typeof passSchema>;
 export type TeamProgression = z.infer<typeof teamProgressionSchema>;
+
+export const shotSchema = z.object({ match_id: id, event_index: number.int().nonnegative(), id: z.string().nullable().optional(), team_id: id, team: z.string(), player_id: id.nullable().optional(), player: z.string().nullable().optional(), period: number.nullable().optional(), minute: number.nullable().optional(), x: number.min(0).max(120).nullable(), y: number.min(0).max(80).nullable(), goal: z.boolean(), xg: number.min(0).max(1).nullable() });
+export type Shot = z.infer<typeof shotSchema>;
+export const insightsSchema = z.object({ match_id: id, team_id: id, xt_status: z.string(), observations: z.array(z.object({ metric: z.string(), definition: z.string(), value: number.nullable(), denominator: number.nullable(), player_id: id.nullable(), player: z.string().nullable(), model_id: z.string().nullable() })) });

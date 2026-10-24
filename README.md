@@ -2,7 +2,7 @@
 
 A modular Streamlit dashboard for competition, season and match selection,
 player passing maps, team shot maps, and player performance statistics.
-Bundesliga 2023/24 is selected by default. No models are trained in this project.
+Bundesliga 2023/24 is selected by default. Experimental xT is fitted offline from recorded events; API requests only load and value actions with the frozen artifact.
 
 ## Run locally
 
@@ -234,7 +234,7 @@ are discovered from named events, so unused substitutes and players with no
 named events are absent. Goals exclude own-goal events. No minutes, ratings,
 assists, or per-90 estimates are inferred. Unknown or out-of-range xG remains
 missing; totals sum recorded values only and the shot view reports coverage.
-StatsBomb supplies xG; the project does not fit a model. All periods are included.
+StatsBomb supplies xG; the project does not fit an xG model. Experimental xT is fitted separately offline, never during API requests. All periods are included.
 
 ## Adding BVB datasets later
 
@@ -453,3 +453,35 @@ The experiment produces a heatmap, convergence plot and held-out pass valuations
 pass/carry valuation functions. Training is never performed in API requests.
 Sprint 5A left FastAPI, Next.js and the Streamlit research app unchanged; Sprint 5B
 now exposes this frozen model through FastAPI and Next.js while preserving Streamlit.
+
+
+## Sprint 6: Coach-friendly match workspace
+
+The workspace answers where recorded shots originated and which players lead
+existing progression and experimental xT measures, without tactical inference.
+`GET /api/v1/matches/{match_id}/shots?team_id=10` exposes provider-order events,
+nullable player/clock/location/xG, and shot-goal outcomes. Omitting team_id returns
+both teams. Invalid IDs return 422; unknown teams return 404; no shots returns [].
+The selected-team control filters the map; its player control filters by numeric ID.
+The SVG uses StatsBomb 120x80 coordinates directly, attacking right in every period.
+Goals use labelled squares; other shots use circles. Marker area increases linearly
+with available xG plus a visible baseline; missing xG uses baseline size and text.
+Unplottable events remain in the accessible event list. All periods are included,
+including shootouts; shot goals exclude own-goal events and are not the final score.
+
+`GET /api/v1/matches/{match_id}/teams/{team_id}/insights` returns deterministic
+observations with metric names, definitions, values, denominators and player/model
+IDs when relevant. Coverage is covered shots / all shots (2/3 means one missing
+value). Recorded xG is a partial sum, null when no values exist. Progressive leaders
+reuse the default inclusive 10m-equivalent definition and existing API tie order;
+zero qualifying completions gives no leader. Experimental xT leaders reuse frozen
+positive-xT rankings and rated-action coverage; they are not ratings or recommendations.
+A missing artifact only marks xT unavailable. Small training coverage and provider
+missingness limit interpretation. No new model is introduced or trained on request.
+
+Match/team-specific keys and component resets prevent late previous-selection
+responses from replacing current evidence. Loading, empty, retryable errors and
+unavailable measurements are explicit. Navigation includes shots, insights and xT;
+the mobile menu closes after following a section link. Existing theme tokens apply.
+Run the API/frontend with the commands above, then run pytest, npm test,
+npm run typecheck and npm run build to verify the workspace.

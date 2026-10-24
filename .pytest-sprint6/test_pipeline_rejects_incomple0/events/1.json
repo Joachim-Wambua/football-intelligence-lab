@@ -1,0 +1,1 @@
+[{"id": "1", "type": {"name": "Pass"}, "period": 1, "team": {"name": "A"}, "player": {"name": "P"}, "location": [10, 40], "pass": {"end_location": [110, 40]}}, {"id": "2", "type": {"name": "Shot"}, "period": 2, "team": {"name": "A"}, "location": [110, 40], "shot": {"outcome": {"name": "Saved"}}}, {"id": "3", "type": {"name": "Half End"}, "period": 1}]
