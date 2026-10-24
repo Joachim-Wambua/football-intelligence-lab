@@ -87,6 +87,7 @@ it("loads API metrics without replacing null xG and switches player passes", asy
   expect(await screen.findByRole("group", { name: /Player A passing map/ })).toBeInTheDocument();
   expect(screen.getAllByText("Unavailable").length).toBeGreaterThan(0);
   expect(screen.getByRole("table", { name: /Player performance/ })).toHaveTextContent("66.7%");
+  expect(screen.getByRole("link", { name: "Open shareable match report" })).toHaveAttribute("href", "/reports/1?competition_id=9&season_id=281&team_id=10");
   await user.selectOptions(screen.getByLabelText("Player"), "101");
   expect(await screen.findByText("No passes recorded for this player.")).toBeInTheDocument();
 });

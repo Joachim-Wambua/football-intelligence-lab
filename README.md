@@ -485,3 +485,70 @@ unavailable measurements are explicit. Navigation includes shots, insights and x
 the mobile menu closes after following a section link. Existing theme tokens apply.
 Run the API/frontend with the commands above, then run pytest, npm test,
 npm run typecheck and npm run build to verify the workspace.
+
+## Sprint 7: Shareable match reports
+
+Open **Open shareable match report** from the selected match/team workspace.
+The report URL records match, competition, season and team IDs, for example:
+`/reports/3895302?competition_id=9&season_id=281&team_id=904`.
+Use IDs returned by your API; this example is a URL format, not a bundled report.
+Copy report link shares the current selection. Recipients need access to the
+application and its configured FastAPI data source; no hosting is added here.
+Shared links reopen current evidence. They are not an immutable analysis archive.
+
+The report answers: what happened in the recorded match, where did the selected
+team shoot, and who leads the existing progression and experimental xT measures?
+It includes provider score/date, both teams' observed shot and passing totals,
+selected-team shot origins and the complete shot-event table, partial provider xG
+coverage, the top five server-ordered progressive passers and xT rows, evidence
+observations with definitions, model provenance, and StatsBomb attribution.
+No metrics or rankings are recalculated in TypeScript. It uses the existing
+competitions, matches, summary, shots, progressive-passing, insights, xT model and
+xT player endpoints without changing Python metrics or API contracts.
+
+Measured outcomes, geometric classifications, provider xG estimates and experimental
+xT estimates are labelled separately. For example, xG coverage 2/3 means one missing
+shot probability; a recorded zero is preserved. The sum is partial when coverage is
+incomplete. All recorded periods, including shootouts, remain included. Own-goal
+events are excluded from shot goals. The static map uses provider 120x80 attacking-
+right coordinates, with constant-size goal squares and other-shot circles. Missing
+locations remain in the event table. Progressive geometry uses the API's default
+threshold and pitch assumptions, independently of custom workspace filters.
+
+Experimental xT includes the actual model hash, training date, training/held-out
+match counts, shot-zone support and fallback. Small-sample, action-conditioned
+values are not calibrated possession-goal probabilities, causal effects, player
+ratings or recommendations. An incompatible model hash withholds the xT table and
+unverifiable model insights. Fitting remains offline; no report request trains a model.
+
+Use **Print / Save as PDF**, then choose the browser's Save as PDF destination.
+Review its preview for the chosen paper size and browser headers/footers. Print CSS
+uses a white background and dark text in Light, Dark or System mode, hides the app
+sidebar/export controls, wraps tables, repeats table headers and avoids splitting
+rows or observations. All shot events and metric definitions are already expanded;
+there is no interactive filter hiding evidence from print. The browser owns file
+creation and cancellation; the application does not claim that a PDF was saved.
+
+Export is disabled until all report requests settle. Missing core context blocks
+the report with retry. Optional failures remain visible as an **Incomplete report**
+and can be printed with those gaps; missing evidence never becomes zero activity.
+A report snapshot shows its UTC retrieval time. Refresh explicitly replaces that
+snapshot; focus/reconnect do not refresh it during review. Match/team/competition/
+season keys prevent old responses or export feedback crossing selections.
+The PDF reflects the displayed snapshot, not a transactional provider revision.
+
+Run the existing API and frontend commands above. Verify from the repository root:
+
+```powershell
+.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest_cache/sprint7
+cd frontend
+npm.cmd test
+npm.cmd run typecheck
+npm.cmd run build
+```
+
+Report tests use mocked contracts to check contents, missing and genuine-zero data,
+coverage, identity/model mismatches, retries, pending/late match responses, team
+switching, URL validation, clipboard links and browser-print requests. Print CSS
+checks cover theme overrides, hidden controls and table pagination rules. Browser
+PDF pagination can vary; inspect the actual preview before distributing a report.
