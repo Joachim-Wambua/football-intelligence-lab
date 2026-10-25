@@ -58,6 +58,11 @@ class CachedProvider:
         return frame
 
 
+    def lineups(self, match_id):
+        """Read optional squad information through the same bounded raw cache."""
+        return self._load("lineups", match_id)
+
+
 @lru_cache(maxsize=1)
 def get_provider():
     """Lazy dependency so importing the API never contacts StatsBomb."""

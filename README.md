@@ -238,8 +238,8 @@ StatsBomb supplies xG; the project does not fit an xG model. Experimental xT is 
 
 ## Adding BVB datasets later
 
-`DatasetSource` defines three methods: `competitions()`,
-`matches(competition_id, season_id)`, and `events(match_id)`. Analytics and plots
+`DatasetSource` defines four methods: `competitions()`,
+`matches(competition_id, season_id)`, `events(match_id)`, and optional-data `lineups(match_id)`. Analytics and plots
 consume the same normalized pandas tables regardless of the source. Cache keys
 include the dataset name so matching IDs in different sources cannot collide.
 
@@ -552,3 +552,31 @@ coverage, identity/model mismatches, retries, pending/late match responses, team
 switching, URL validation, clipboard links and browser-print requests. Print CSS
 checks cover theme overrides, hidden controls and table pagination rules. Browser
 PDF pagination can vary; inspect the actual preview before distributing a report.
+
+
+## Sprint 8A: Player Intelligence data foundation
+
+Open **Player Intelligence** in the navigation or visit `/players`. Choose a
+competition/season and team, apply one to five explicit fixtures, then search by
+player name or provider ID. Profiles show confirmed appearances, reliable elapsed
+minutes, minutes/sample coverage, recorded contributions, qualified per-90 values,
+provider xG coverage, experimental frozen xT, definitions and match-by-match links
+back to the correct Match Intelligence context. There are no percentile radars,
+ratings, invented physical attributes or league-wide claims.
+
+Playing time comes from audited Starting XI, substitution IDs, dismissals and
+period-end records, never a player's first/last touch. It includes recorded added
+time, excludes intervals/shootouts, and stays null with a status when unsupported.
+Unknown minutes suppress pooled per-90 rather than mismatching numerator and
+exposure. Data from a selected Leverkusen sample is not a full Bundesliga season.
+
+See the [methodology, real-fixture audit, API and worked examples](docs/player_intelligence.md)
+and the [hashed player-ID coverage manifest](docs/player_audit.json). The source
+boundary now supports optional lineup tables. Versioned player catalogue/profile
+endpoints require explicit competition, season, team and at most five match IDs;
+bounded raw/aggregation caches prevent an unbounded season scan on each request.
+Model fitting remains offline and all football calculations remain in Python.
+
+Verify with pytest, frontend tests, typecheck and build using the commands in the
+player guide. Generated `.pytest-*/` directories are ignored; Sprint 6's previously
+tracked generated artifacts are removed from the index without deleting local data.

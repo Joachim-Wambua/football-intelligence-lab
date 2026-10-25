@@ -1,0 +1,306 @@
+{
+  "source": "https://github.com/statsbomb/open-data",
+  "audited_on": "2026-10-25",
+  "policy": "Elapsed pitch minutes including added time, excluding intervals/shootouts. Null for unsupported temporary absences.",
+  "matches": [
+    {
+      "match_id": 3895052,
+      "sha256": {
+        "events": "ecc00b4e7ddd0154532329091d5d82fd7de4b9f6aa8da174788816001e40e605",
+        "lineups": "485e5e4f06136578a5dd18648397808110978cadb36a63cbe39acf0de613c18b"
+      },
+      "period_seconds": {
+        "1": 2882.395,
+        "2": 3049.511
+      },
+      "teams": [
+        {
+          "team_id": 182,
+          "team": "RB Leipzig",
+          "verified_appearance_ids": [
+            5536,
+            5557,
+            5625,
+            8211,
+            8222,
+            8509,
+            8769,
+            12034,
+            15155,
+            16275,
+            16532,
+            30360,
+            39167,
+            39460,
+            40185,
+            74659
+          ],
+          "verified_unused_ids": [
+            8507,
+            9237,
+            24977,
+            39179
+          ],
+          "null_minutes": {}
+        },
+        {
+          "team_id": 904,
+          "team": "Bayer Leverkusen",
+          "verified_appearance_ids": [
+            3500,
+            8221,
+            8403,
+            8667,
+            8804,
+            9195,
+            10336,
+            27133,
+            28239,
+            28268,
+            30606,
+            32289,
+            40724,
+            196651
+          ],
+          "verified_unused_ids": [
+            3465,
+            46046,
+            114833,
+            261630,
+            394479
+          ],
+          "null_minutes": {
+            "32712": "temporary_absence_unsupported"
+          }
+        }
+      ]
+    },
+    {
+      "match_id": 3895060,
+      "sha256": {
+        "events": "1b2fcf16823fbf04f4ae40492d492304f8d54fdb991cebc7fdcaa2e1d72e5585",
+        "lineups": "a94f051cea4356e4a09741cb737d5e6fd80b0b6611bdebb06e25d0901bfe9213"
+      },
+      "period_seconds": {
+        "1": 3089.402,
+        "2": 2900.049
+      },
+      "teams": [
+        {
+          "team_id": 185,
+          "team": "Borussia Mönchengladbach",
+          "verified_appearance_ids": [
+            3230,
+            7198,
+            8068,
+            8816,
+            9174,
+            11399,
+            12323,
+            25039,
+            29003,
+            29595,
+            36830,
+            45567,
+            48396,
+            135777,
+            343893,
+            369243
+          ],
+          "verified_unused_ids": [
+            8813,
+            12320,
+            36811,
+            158626
+          ],
+          "null_minutes": {}
+        },
+        {
+          "team_id": 904,
+          "team": "Bayer Leverkusen",
+          "verified_appearance_ids": [
+            3500,
+            8221,
+            8667,
+            8804,
+            9195,
+            10336,
+            27133,
+            28239,
+            28268,
+            30606,
+            32289,
+            32712,
+            40724,
+            49337,
+            196651,
+            261630
+          ],
+          "verified_unused_ids": [
+            3465,
+            8403,
+            46046,
+            114833
+          ],
+          "null_minutes": {}
+        }
+      ]
+    },
+    {
+      "match_id": 8656,
+      "sha256": {
+        "events": "3f6b7f638235421f6b2ca1b4b38f3cfedb89572a847a6a4e06d8ee4f4c137c13",
+        "lineups": "11ceb7312b98cd26141d08709e6bf8674405747db12f4f6d567f94076f342dfb"
+      },
+      "period_seconds": {
+        "1": 2770.54,
+        "2": 2885.733,
+        "3": 1115.468,
+        "4": 1163.323
+      },
+      "teams": [
+        {
+          "team_id": 768,
+          "team": "England",
+          "verified_appearance_ids": [
+            3094,
+            3233,
+            3244,
+            3293,
+            3318,
+            3336,
+            3468,
+            3532,
+            3594,
+            3612,
+            10955,
+            10956,
+            10960
+          ],
+          "verified_unused_ids": [
+            3314,
+            3474,
+            3504,
+            3537,
+            3569,
+            3645,
+            3664,
+            4597
+          ],
+          "null_minutes": {
+            "3205": "temporary_absence_unsupported",
+            "3308": "temporary_absence_unsupported"
+          }
+        },
+        {
+          "team_id": 785,
+          "team": "Croatia",
+          "verified_appearance_ids": [
+            3444,
+            3471,
+            5457,
+            5460,
+            5461,
+            5463,
+            5465,
+            5468,
+            5469,
+            5470,
+            5472,
+            5474,
+            5739,
+            6305,
+            6308
+          ],
+          "verified_unused_ids": [
+            5456,
+            5459,
+            6307,
+            6309,
+            6310,
+            6311,
+            16531
+          ],
+          "null_minutes": {}
+        }
+      ]
+    },
+    {
+      "match_id": 7541,
+      "sha256": {
+        "events": "ed25888e92193f0394e121a9101c4d3a7607a225b4c7416c9b13a647b54b9584",
+        "lineups": "df348a6c22137ba88ef6c3ae468251e925f03c4d901effc004e7b61503323547"
+      },
+      "period_seconds": {
+        "1": 2779.187,
+        "2": 3013.76
+      },
+      "teams": [
+        {
+          "team_id": 769,
+          "team": "Colombia",
+          "verified_appearance_ids": [
+            3279,
+            3445,
+            3494,
+            4276,
+            5678,
+            5680,
+            5685,
+            5686,
+            5688,
+            5689,
+            5691,
+            5692,
+            5695,
+            5696
+          ],
+          "verified_unused_ids": [
+            6192,
+            6193,
+            6196,
+            6333,
+            6334,
+            6360,
+            27225,
+            27417,
+            27470
+          ],
+          "null_minutes": {}
+        },
+        {
+          "team_id": 778,
+          "team": "Japan",
+          "verified_appearance_ids": [
+            3175,
+            3300,
+            3530,
+            3810,
+            5679,
+            5681,
+            5682,
+            5683,
+            5684,
+            5687,
+            5690,
+            5693,
+            5694,
+            5697
+          ],
+          "verified_unused_ids": [
+            6191,
+            6337,
+            6338,
+            6339,
+            23721,
+            24015,
+            37194,
+            37486,
+            42236
+          ],
+          "null_minutes": {}
+        }
+      ]
+    }
+  ]
+}
