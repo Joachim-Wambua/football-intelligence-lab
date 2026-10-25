@@ -73,17 +73,27 @@ def player_statistics(events: pd.DataFrame, team: str) -> pd.DataFrame:
     rows = []
     for player in sorted(players):
         subset = team_events.loc[team_events["player"].eq(player)]
-        passing = passing_summary(select_passes(subset, team))
-        shots = select_shots(subset, team)
-        dribbles = subset.get("dribble_outcome", pd.Series(index=subset.index, dtype=object))
-        interceptions = subset.get("interception_outcome", pd.Series(index=subset.index, dtype=object))
-        rows.append({"Player": player, "Passes": passing["attempted"],
-                     "Completed passes": passing["completed"],
-                     "Pass completion %": passing["completion_pct"],
-                     "Shots": len(shots), "Goals": int(shots["goal"].sum()),
-                     "xG": shots["xg"].sum(min_count=1),
-                     "Successful dribbles": int((subset["type"].eq("Dribble") & dribbles.eq("Complete")).sum()),
-                     "Successful interceptions": int((subset["type"].eq("Interception") & interceptions.isin(["Won", "Success", "Success In Play", "Success Out"])).sum())})
+        rows.append({"Player": player, **descriptive_statistics(subset, team)})
     return pd.DataFrame(rows, columns=["Player", "Passes", "Completed passes",
         "Pass completion %", "Shots", "Goals", "xG", "Successful dribbles",
         "Successful interceptions"])
+
+
+def descriptive_statistics(events: pd.DataFrame, team: str) -> dict:
+    """Shared event counts for an already ID-filtered person or a team.
+
+    Completion follows the StatsBomb omitted-outcome convention. xG sums
+    available probabilities only; all unknown stays NaN, including no shots.
+    Counts are observed events, not minutes, ratings or predicted outcomes.
+    """
+    events = events.loc[events.team.eq(team)]
+    passing = passing_summary(select_passes(events, team))
+    shots = select_shots(events, team)
+    dribbles = events.get("dribble_outcome", pd.Series(index=events.index, dtype=object))
+    interceptions = events.get("interception_outcome", pd.Series(index=events.index, dtype=object))
+    return {"Passes": passing["attempted"], "Completed passes": passing["completed"],
+        "Pass completion %": passing["completion_pct"], "Shots": len(shots), "Goals": int(shots.goal.sum()),
+        "xG": shots.xg.sum(min_count=1),
+        "Successful dribbles": int((events.type.eq("Dribble") & dribbles.eq("Complete")).sum()),
+        "Successful interceptions": int((events.type.eq("Interception") & interceptions.isin(
+            ["Won", "Success", "Success In Play", "Success Out"])).sum())}

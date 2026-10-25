@@ -12,3 +12,5 @@ frontend/coverage/
 
 research/xt-data/
 research/xt/
+
+.pytest-*/

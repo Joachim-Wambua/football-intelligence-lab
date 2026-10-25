@@ -9,11 +9,12 @@ from src import data_loader
 
 
 class DatasetSource(Protocol):
-    """Sources expose competition-season, match and flattened event tables."""
+    """Sources expose competition-season, match, event and optional lineup tables."""
 
     def competitions(self) -> pd.DataFrame: ...
     def matches(self, competition_id: int, season_id: int) -> pd.DataFrame: ...
     def events(self, match_id: int) -> pd.DataFrame: ...
+    def lineups(self, match_id: int) -> pd.DataFrame: ...
 
 
 class StatsBombSource:
@@ -32,10 +33,15 @@ class StatsBombSource:
         return data_loader.load_events(match_id)
 
 
+    def lineups(self, match_id: int) -> pd.DataFrame:
+        """Read provider-ID squad records with unmodified position histories."""
+        return data_loader.load_lineups(match_id)
+
+
 class LocalDatasetSource:
     """Read normalized JSON records from a directory, including future BVB data.
 
-    Files: competitions.json, matches.json, events/<match_id>.json.
+    Files: competitions.json, matches.json, events/<match_id>.json; optional lineups/<match_id>.json.
     Provider-specific raw data must first be converted to the documented schema.
     """
 
@@ -57,3 +63,13 @@ class LocalDatasetSource:
     def events(self, match_id: int) -> pd.DataFrame:
         """Read a match's normalized events, preserving coordinate lists."""
         return pd.read_json(self.root / "events" / f"{int(match_id)}.json")
+
+
+    def lineups(self, match_id: int) -> pd.DataFrame:
+        """Read optional normalized roster rows; absence is explicitly empty.
+
+        Files use lineups/<match_id>.json with team_id/team, player_id/player,
+        positions and cards. An empty table means unavailable, never no players.
+        """
+        path = self.root / "lineups" / f"{int(match_id)}.json"
+        return pd.read_json(path) if path.exists() else pd.DataFrame()

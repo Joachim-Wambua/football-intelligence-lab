@@ -39,3 +39,20 @@ def load_events(match_id: int) -> pd.DataFrame:
     or event filtering is applied. Network and provider errors propagate.
     """
     return sb.events(match_id=int(match_id), split=False, flatten_attrs=True)
+
+
+def load_lineups(match_id: int) -> pd.DataFrame:
+    """Return the complete provider squad, keyed by numeric team/player IDs.
+
+    Raw positions/cards remain nested, preserving period-specific position
+    history and unused substitutes. No physical attributes or minutes are
+    invented. Missing public lineup files propagate for the caller to qualify.
+    """
+    raw = sb.lineups(match_id=int(match_id), fmt="dict")
+    rows = []
+    for team in raw.values():
+        for player in team["lineup"]:
+            rows.append({"team_id": team["team_id"], "team": team["team_name"],
+                "player_id": player["player_id"], "player": player["player_name"],
+                "positions": player.get("positions"), "cards": player.get("cards")})
+    return pd.DataFrame(rows, columns=["team_id", "team", "player_id", "player", "positions", "cards"])

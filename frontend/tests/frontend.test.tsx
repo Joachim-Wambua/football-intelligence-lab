@@ -121,3 +121,17 @@ it("clears match and player content when a different season has no matches", asy
   expect(screen.queryByRole("table")).not.toBeInTheDocument();
   expect(screen.queryByRole("group", { name: /passing map/ })).not.toBeInTheDocument();
 });
+
+it("restores exact match/team context from a Player Intelligence deep link", async () => {
+  const secondTeam = { ...team, team_id: 20, team: "C" };
+  const data: Record<string, unknown> = { ...fixtures,
+    "/matches?competition_id=9&season_id=281": [
+      ...(fixtures["/matches?competition_id=9&season_id=281"] as object[]),
+      { match_id: 2, match_date: "2024-01-08", home_team: "A", away_team: "C", home_score: 0, away_score: 0 }],
+    "/matches/2/summary": { match_id: 2, event_count: 20, teams: [team, secondTeam] } };
+  vi.stubGlobal("fetch", vi.fn(async (url: string) => new Response(JSON.stringify(data[url.split("/api/v1")[1]] ?? {}))));
+  render(<SWRConfig value={{ provider: () => new Map() }}><Dashboard initialSelection={{ competitionId: 9, seasonId: 281, matchId: 2, teamId: 20 }}/></SWRConfig>);
+  expect(await screen.findByLabelText("Team")).toHaveValue("20");
+  expect(screen.getByLabelText("Match")).toHaveValue("2");
+  expect(screen.getByRole("link", { name: "Open shareable match report" })).toHaveAttribute("href", "/reports/2?competition_id=9&season_id=281&team_id=20");
+});
