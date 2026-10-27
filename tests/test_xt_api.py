@@ -1,4 +1,5 @@
 """Signed movement values, empirical coverage and offline-only artifact serving."""
+import hashlib
 import json
 from pathlib import Path
 from unittest.mock import Mock
@@ -105,11 +106,26 @@ def test_model_contract_and_no_training(client, monkeypatch):
 
 def test_shipped_model_is_sparse_and_unchanged():
     active = read_xt_model(MODEL_PATH)
-    assert active.info.model_id == '7e8d1d30e10f2f89268c972d8ba9f356038475618b11b256db7d06abdf81daab'
+    raw = MODEL_PATH.read_bytes()
+    # Git may check text out as CRLF on Windows and LF on Linux. Verify the
+    # frozen content separately from the API's intentional byte-level identity.
+    assert hashlib.sha256(raw.replace(b'\r\n', b'\n')).hexdigest() == '8315bab1e55db6e03fe604c176e0a12253b66098dbb2a92d53379cc2a5a97ef6'
+    assert active.info.model_id == hashlib.sha256(raw).hexdigest()
     assert (active.info.nx, active.info.ny) == (16, 12)
     assert active.info.coverage.shot_zones == 26
     assert len(active.info.coverage.train_ids) == 6
     assert len(active.info.coverage.held_out_ids) == 2
+
+
+@pytest.mark.parametrize('newline', [b'\n', b'\r\n'])
+def test_artifact_identity_matches_served_bytes_across_checkout_line_endings(tmp_path, newline):
+    """Line endings change byte identity, never the frozen scoring surface."""
+    raw = MODEL_PATH.read_bytes().replace(b'\r\n', b'\n').replace(b'\n', newline)
+    path = tmp_path / 'checkout.json'
+    path.write_bytes(raw)
+    active = read_xt_model(path)
+    assert active.info.model_id == hashlib.sha256(raw).hexdigest()
+    assert active.info.surface == read_xt_model(MODEL_PATH).info.surface
 
 
 def test_artifact_cache_and_recovery(model_path, monkeypatch):

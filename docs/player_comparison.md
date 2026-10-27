@@ -94,6 +94,7 @@ not just link text.
 ## Verification and automation
 
 ```powershell
+New-Item -ItemType Directory -Force .pytest_cache | Out-Null
 .venv\Scripts\python.exe -m pytest -q --basetemp=.pytest_cache/sprint8b
 cd frontend
 npm.cmd test
@@ -115,3 +116,7 @@ The typecheck command generates Next route types before `tsc` so it also works o
 a clean checkout. The workflow follows the official
 [setup-node](https://github.com/actions/setup-node) and
 [setup-python](https://github.com/actions/setup-python) guidance.
+
+CI uses pytest's default temporary directory on the clean Linux runner. The frozen
+xT test checks LF-normalized artifact content separately from the API's exact-byte
+model ID, so Git checkout line endings cannot masquerade as a changed model.

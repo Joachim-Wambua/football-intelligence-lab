@@ -30,7 +30,7 @@ jobs:
           cache: pip
           cache-dependency-path: requirements.txt
       - run: python -m pip install -r requirements.txt
-      - run: python -m pytest -q --basetemp=.pytest_cache/ci
+      - run: python -m pytest -q
   frontend:
     name: Frontend tests, types and build
     runs-on: ubuntu-latest
