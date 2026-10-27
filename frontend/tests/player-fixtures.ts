@@ -1,9 +1,22 @@
-﻿import type { PlayerProfile } from "@/lib/player-contracts";
+﻿import type { ComparisonEvidence, PlayerProfile } from "@/lib/player-contracts";
 export const playerContext = { competitionId: 9, seasonId: 281, teamId: 10, matchIds: [1, 2] };
 const statistics = { passes: 10, completed_passes: 8, completed_progressive_passes: 2, progressive_valid_geometry: 9,
   shots: 2, goals: 1, shots_with_xg: 1, xg: .4, successful_dribbles: 1, successful_interceptions: 2,
   xt_positive: .03, xt_net: -.01, xt_rated_actions: 8, xt_attempted_actions: 12 };
-const aggregate = { appearances: 2, unknown_appearances: 0, minutes: null, known_minutes: 90, minutes_covered_matches: 1,
+const evidence = (label: string, total: number | null, kind: ComparisonEvidence["kind"] = "observed", overrides: Partial<ComparisonEvidence> = {}): ComparisonEvidence => ({
+  label, kind, total, chart_total: total, per90: null, status: total === null ? "unavailable" : "complete", definition: `${label} definition from Python.`,
+  coverage_count: null, coverage_total: null, note: "Qualified fixture evidence from Python; complete minutes required for rates.", ...overrides,
+});
+export const comparisonEvidenceFixture = {
+  passes: evidence("Pass attempts", 10), completed_passes: evidence("Completed passes", 8),
+  completed_progressive_passes: evidence("Completed progressive passes", 2, "geometry", { status: "geometry_partial", chart_total: null, coverage_count: 9, coverage_total: 10 }),
+  shots: evidence("Shots", 2), goals: evidence("Shot goals", 1), successful_dribbles: evidence("Successful dribbles", 1),
+  successful_interceptions: evidence("Successful interceptions", 2),
+  xg: evidence("Provider xG estimate", .4, "provider_estimate", { status: "covered_shots_only", chart_total: null, coverage_count: 1, coverage_total: 2 }),
+  xt_positive: evidence("Experimental positive xT estimate", .03, "experimental_estimate", { status: "rated_moves_only", chart_total: null, coverage_count: 8, coverage_total: 12 }),
+  xt_net: evidence("Experimental net xT estimate", -.01, "experimental_estimate", { status: "rated_moves_only", chart_total: null, coverage_count: 8, coverage_total: 12 }),
+};
+const aggregate = { comparison_evidence: comparisonEvidenceFixture, appearances: 2, unknown_appearances: 0, minutes: null, known_minutes: 90, minutes_covered_matches: 1,
   statistics, per90: { passes: null, completed_passes: null, completed_progressive_passes: null, shots: null, goals: null,
     xg: null, successful_dribbles: null, successful_interceptions: null, xt_positive: null, xt_net: null }, per90_match_ids: [] };
 export const playerProfileFixture: PlayerProfile = {

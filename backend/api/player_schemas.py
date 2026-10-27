@@ -47,6 +47,20 @@ class PositionSpell(Contract):
     end_reason: str | None = None
 
 
+class ComparisonEvidence(Contract):
+    """Covered totals plus Python-qualified chart/rate values, in natural units."""
+    label: str
+    kind: Literal['observed', 'geometry', 'provider_estimate', 'experimental_estimate']
+    definition: str
+    total: float | None
+    per90: float | None
+    chart_total: float | None
+    status: Literal['complete', 'covered_shots_only', 'rated_moves_only', 'geometry_partial', 'partial_sample', 'unavailable']
+    coverage_count: int | None = Field(ge=0)
+    coverage_total: int | None = Field(ge=0)
+    note: str
+
+
 class PlayerAggregate(Contract):
     appearances: int = Field(ge=0)
     unknown_appearances: int = Field(ge=0)
@@ -56,6 +70,7 @@ class PlayerAggregate(Contract):
     statistics: PlayerContributionStatistics
     per90: PlayerRates
     per90_match_ids: list[int]
+    comparison_evidence: dict[str, ComparisonEvidence]
 
 
 class PlayerIdentity(Contract):

@@ -8,8 +8,13 @@ model-based description of buildup, not a claim about player quality or a
 prediction of the next possession's outcome.
 
 The artifact is frozen in Sprint 5B; no model is fitted, replaced or updated in
-HTTP handlers. The model SHA256 remains
-`7e8d1d30e10f2f89268c972d8ba9f356038475618b11b256db7d06abdf81daab`.
+HTTP handlers. The API model ID hashes exact artifact bytes. The Windows CRLF
+checkout has SHA256
+`7e8d1d30e10f2f89268c972d8ba9f356038475618b11b256db7d06abdf81daab`;
+the same frozen content with LF line endings has SHA256
+`8315bab1e55db6e03fe604c176e0a12253b66098dbb2a92d53379cc2a5a97ef6`.
+These checkout representations have identical scoring surfaces. Tests verify
+LF-normalized content and exact-byte API identity separately; no model is refitted.
 The active artifact has six Leverkusen training matches and two held out. **Only
 26 of 192 zones contain observed shots**, even though all zones have some move
 support. A converged surface can therefore still depend on very sparse goal data.

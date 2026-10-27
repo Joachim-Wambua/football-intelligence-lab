@@ -580,3 +580,26 @@ Model fitting remains offline and all football calculations remain in Python.
 Verify with pytest, frontend tests, typecheck and build using the commands in the
 player guide. Generated `.pytest-*/` directories are ignored; Sprint 6's previously
 tracked generated artifacts are removed from the index without deleting local data.
+
+
+## Sprint 8B: Player Comparison
+
+In `/players`, apply an explicit 1-5 match collection and choose **Compare players**.
+Search/select two distinct provider IDs from the same competition, season, team
+and selected files. Exposure cards show verified/known minutes, appearances,
+positions and exact sample IDs. Switch between covered totals and Python-qualified
+per90, using signed bar charts and keyboard-accessible numeric tables. The second
+player uses the existing cached catalogue; no repeat profile/provider fetch is needed.
+
+Observed counts, provider xG and experimental xT are separated. Partial xG/xT sums
+remain labelled in tables, with bars/comparison rates withheld for incomplete
+recorded coverage. Null is unavailable; genuine zero and negative xT are preserved.
+Position history does not infer a primary role. There are no combined ratings,
+percentiles, new models or league-wide claims; radar charts remain for Sprint 8C.
+See [comparison methodology, limitations and verification](docs/player_comparison.md).
+
+Player-to-Match links now restore the full validated URL hierarchy, including
+subsequent navigation and safe defaults for invalid/unknown context. Destination
+tests verify actual selected competition, season, match and team. GitHub Actions
+adds automated pytest, npm test, typecheck and build jobs on pull requests and main.
+`npm run typecheck` generates route types before checking a clean checkout.

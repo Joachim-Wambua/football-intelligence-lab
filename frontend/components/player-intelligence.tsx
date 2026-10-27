@@ -5,6 +5,7 @@ import { z } from "zod";
 import { apiGet } from "@/lib/api";
 import { competitionSchema, matchSchema, summarySchema, type Competition, type Match, type Team } from "@/lib/contracts";
 import { collectionQuery, hasPlayerContext, playerCatalogueSchema, playerProfileSchema, type PlayerCollection, type PlayerProfile } from "@/lib/player-contracts";
+import { PlayerComparison } from "./player-comparison";
 import { ErrorState, LoadingState, Panel, SelectField, MetricCard } from "./ui";
 const options = { shouldRetryOnError: false, revalidateOnFocus: false, keepPreviousData: false };
 
@@ -62,15 +63,19 @@ function PlayerCatalogueContent({ context }: { context: PlayerCollection }) {
   const path = `/player-intelligence/players?${collectionQuery(context)}`;
   const query = useSWR(path, path => apiGet(path, playerCatalogueSchema), options);
   const [search, setSearch] = useState(""), [selected, setSelected] = useState<number>();
+  const [mode, setMode] = useState<"profile" | "comparison">("profile");
   if (query.error) return <ErrorState message={query.error.message} retry={() => void query.mutate()}/>;
   if (!query.data) return <LoadingState label="Preparing bounded player collection…"/>;
   if (!hasPlayerContext(query.data.context, context)) return <p role="alert">Player response does not match the selected collection.</p>;
   const filtered = query.data.players.filter(row => `${row.player} ${row.aliases.join(" ")} ${row.player_id}`.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
   const player = filtered.find(row => row.player_id === selected) ?? filtered[0];
-  return <div className="space-y-6"><Panel title="Player catalogue" subtitle={query.data.context.sample_label}>
+  return <div className="space-y-6"><div className="flex flex-wrap gap-3" role="group" aria-label="Player workspace view">
+    <button className="min-h-11 rounded border border-border px-4" aria-pressed={mode === "profile"} onClick={() => setMode("profile")}>Player profile</button>
+    <button className="min-h-11 rounded border border-border px-4" aria-pressed={mode === "comparison"} onClick={() => setMode("comparison")}>Compare players</button>
+  </div>{mode === "comparison" ? <PlayerComparison key={path} catalogue={query.data}/> : <><Panel title="Player catalogue" subtitle={query.data.context.sample_label}>
     <label className="mb-2 block font-bold" htmlFor="player-search">Search player name or provider ID</label><input id="player-search" type="search" value={search} onChange={event => setSearch(event.target.value)} className="mb-4 min-h-11 w-full rounded border border-border bg-surface p-3"/>
     {!filtered.length ? <p role="status">No players match this selection.</p> : <SelectField label="Player identity" value={player.player_id} onChange={value => setSelected(Number(value))}>{filtered.map(row => <option key={row.player_id} value={row.player_id}>{row.player} · ID {row.player_id}</option>)}</SelectField>}
-  </Panel>{player && <SelectedPlayer key={`${path}-${player.player_id}`} context={context} playerId={player.player_id}/>}</div>;
+  </Panel>{player && <SelectedPlayer key={`${path}-${player.player_id}`} context={context} playerId={player.player_id}/>}</>}</div>;
 }
 function SelectedPlayer({ context, playerId }: { context: PlayerCollection; playerId: number }) {
   const path = `/player-intelligence/players/${playerId}?${collectionQuery(context)}`;

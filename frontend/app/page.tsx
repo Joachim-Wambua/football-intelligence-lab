@@ -1,10 +1,9 @@
 ﻿import { Dashboard } from "@/components/dashboard";
-import { positiveReportId } from "@/lib/match-report";
+import { readMatchSelection } from "@/lib/match-navigation";
 
-/** Deep links from Player Intelligence restore match/team selection by ID. */
+/** Route values are validated before client state restores provider membership. */
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const query = await searchParams;
-  return <Dashboard initialSelection={{ competitionId: positiveReportId(query.competition_id) ?? undefined,
-    seasonId: positiveReportId(query.season_id) ?? undefined, matchId: positiveReportId(query.match_id) ?? undefined,
-    teamId: positiveReportId(query.team_id) ?? undefined }}/>;
+  // Raw route identity also resets defaults when two different invalid URLs normalize alike.
+  return <Dashboard initialSelection={readMatchSelection(query)} navigationKey={JSON.stringify(query)}/>;
 }
