@@ -4,6 +4,7 @@ from numbers import Real
 
 import pandas as pd
 
+from src.player_comparison import comparison_evidence
 from src.metrics import descriptive_statistics, select_shots
 from src.playing_time import playing_time, MINUTES_PROVENANCE
 from src.progressive import progressive_passes
@@ -128,8 +129,10 @@ def aggregate_player(contributions: list[dict], *, incomplete_collection: bool =
     known = nullable_sum(row['minutes'] for row in covered)
     complete = len(covered) == len(contributions) and not incomplete_collection
     minutes = known if complete else None
-    return {"appearances": sum(row['appeared'] is True for row in contributions),
+    result = {"appearances": sum(row['appeared'] is True for row in contributions),
         "unknown_appearances": sum(row['appeared'] is None for row in contributions),
         "minutes": minutes, "known_minutes": known, "minutes_covered_matches": len(covered),
         "statistics": statistics, "per90": per90(statistics, minutes),
         "per90_match_ids": [row['match_id'] for row in contributions] if minutes is not None and minutes > 0 else []}
+    result['comparison_evidence'] = comparison_evidence(result, DEFINITIONS, incomplete_collection=incomplete_collection)
+    return result

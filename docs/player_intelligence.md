@@ -5,8 +5,9 @@
 This module asks what an identified player contributed in **explicitly selected
 matches**, how much recorded pitch time supports those counts, and which rates
 can be normalized without inventing exposure. It does not define a league-wide
-reference population. Percentile radars, ratings, physical attributes and position
-benchmarks are deferred to Sprint 8B after comparison-data verification.
+reference population. Sprint 8B adds descriptive [two-player comparison](player_comparison.md). Percentile
+radars require separate Sprint 8C validation; ratings, physical attributes and
+inferred primary-position benchmarks are not introduced.
 
 On 25 October 2026 the audit downloaded actual public JSON from the
 [StatsBomb repository](https://github.com/statsbomb/open-data), rather than relying

@@ -10,9 +10,14 @@ export const playerRatesSchema = z.object({ passes: finite.nullable(), completed
 const positionSpellSchema = z.object({ position_id: count.nullable().optional(), position: z.string().nullable().optional(),
   from: z.string().nullable().optional(), to: z.string().nullable().optional(), from_period: id.max(5).nullable().optional(),
   to_period: id.max(5).nullable().optional(), start_reason: z.string().nullable().optional(), end_reason: z.string().nullable().optional() });
+export const comparisonEvidenceSchema = z.object({ label: z.string(), kind: z.enum(["observed", "geometry", "provider_estimate", "experimental_estimate"]),
+  definition: z.string(), total: finite.nullable(), per90: finite.nullable(), chart_total: finite.nullable(),
+  status: z.enum(["complete", "covered_shots_only", "rated_moves_only", "geometry_partial", "partial_sample", "unavailable"]),
+  coverage_count: count.nullable(), coverage_total: count.nullable(), note: z.string() });
+export type ComparisonEvidence = z.infer<typeof comparisonEvidenceSchema>;
 const aggregateSchema = z.object({ appearances: count, unknown_appearances: count, minutes: finite.nonnegative().nullable(),
   known_minutes: finite.nonnegative().nullable(), minutes_covered_matches: count, statistics: playerStatisticsSchema,
-  per90: playerRatesSchema, per90_match_ids: z.array(id) });
+  per90: playerRatesSchema, per90_match_ids: z.array(id), comparison_evidence: z.record(z.string(), comparisonEvidenceSchema) });
 const identitySchema = z.object({ player_id: id, player: z.string(), aliases: z.array(z.string()), team_id: id, team: z.string(),
   positions: z.array(z.string()), aggregate: aggregateSchema });
 const contextSchema = z.object({ competition_id: id, season_id: id, team_id: id, requested_match_ids: z.array(id).min(1).max(5),
@@ -27,6 +32,8 @@ export const playerProfileSchema = z.object({ ...common, identity: identitySchem
   positions: z.array(z.string()), position_history: z.array(positionSpellSchema), minutes: finite.nonnegative().nullable(),
   appeared: z.boolean().nullable(), minutes_status: z.string(), minutes_provenance: z.string(), statistics: playerStatisticsSchema,
   per90: playerRatesSchema, model_id: z.string().nullable() })) });
+export type PlayerCatalogueData = z.infer<typeof playerCatalogueSchema>;
+export type PlayerIdentity = z.infer<typeof identitySchema>;
 export type PlayerProfile = z.infer<typeof playerProfileSchema>;
 export type PlayerCollection = { competitionId: number; seasonId: number; teamId: number; matchIds: number[] };
 
