@@ -603,3 +603,9 @@ subsequent navigation and safe defaults for invalid/unknown context. Destination
 tests verify actual selected competition, season, match and team. GitHub Actions
 adds automated pytest, npm test, typecheck and build jobs on pull requests and main.
 `npm run typecheck` generates route types before checking a clean checkout.
+## Player benchmarking foundation (Sprint 8C.1)
+
+See the [reproducible feasibility audit](docs/player_benchmarks.md) for the
+published competition-season inventory, offline reference preparation, conservative
+position cohorts and tested empirical percentile policy. Benchmark endpoints and
+radars remain deferred pending adequate reference data.
