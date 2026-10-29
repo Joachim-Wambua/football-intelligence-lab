@@ -1,0 +1,1530 @@
+{
+  "manifest": {
+    "LICENSE.pdf": "a5462e69aeb71a39268b760b110c5c2190a2e0cee3015ba976f66bd71f6c2bb4",
+    "README.md": "98a757466c4d931dba4b6c4290c55c2fe74e4550d7455bbe05fd884dc831aff3",
+    "events/3893787.json": "ea1ddf4d1aff1f7f5ede0af972b165ebcfee5473833c8359d96a79d4d7735f36",
+    "events/3893788.json": "c674346c39ed85dedfd577925177df2761bd58c4f94b44ea11aed304802e59e2",
+    "events/3893789.json": "e9b6bcc8ab07aa2a54daf553a99530311cfcbfb4ba77a9b92d3e724f6ed6476d",
+    "events/3893790.json": "075bceb7555dd820434a564d258cca098f183e35005fa29983865a5f704082bc",
+    "events/3893791.json": "5f01634c1a50348a9ea2d3eed7e6ea03ffce8dca33a84afae95ed99a06aa2834",
+    "events/3893792.json": "038e96c31d3ba47c9834c1a2063e3be12e7b3d5659d8d591b1fb2a785387d536",
+    "events/3893793.json": "cad53a269d4af50422c53c82ba842fe57ee6c8a58026bc599cca2a702a7093ad",
+    "events/3893794.json": "2f7ca6fb91b8de41dd928c01aef1c6e2919aa1de0e11a613c31c399c0f242ecc",
+    "events/3893795.json": "691cbb1ed8dec8b4b9d87b42d79cb4be4af9381bd6267fb7a33368a89c84e1c8",
+    "events/3893796.json": "136dcafbb168ec1e9631c5654858a6662735e5e73ab24e26dcf14fa13960d323",
+    "events/3893797.json": "e25a3ae4b9f53945fece957c77846bdae4c2369605d20758b55a95a9ed7c858e",
+    "events/3893798.json": "9ba1a592bec4930fe4822db4e6c3ede606941fff07f99a901ed566c48b3acab2",
+    "events/3893799.json": "27b83b6319a47f151335a28872d8d1bedffaabe0d4d16eb2492df2fb23bba488",
+    "events/3893800.json": "bcc99d1d2cf2c8680969fbf4dd1fe62f5a8973ede904a411fb2f110850754d64",
+    "events/3893801.json": "5970a310da617dff714abc94a7ebabb6e35d1bb2c53ecbfba9d86e49ee7bbdc4",
+    "events/3893802.json": "cbc8d1848fbf2555feece8e55dd3512fe577402400a23a51bc057e70d419ba3d",
+    "events/3893803.json": "593f8e5c822fc44739b8ba3eb2b8ea48d82cda7251b60eb375340e8640d804f4",
+    "events/3893804.json": "9f94d13d4807f4c7fb4219175f65d6181111d6343896a5da5c53451c5b41c3e4",
+    "events/3893805.json": "6a01a09fb4f4369259d4ddc6d575e4196514eaf3fe064500faeeb290b6f1d78e",
+    "events/3893806.json": "4142e3ab41601f20734d7dc3e8c74f92a6a38498ccdf53e0a411fcb74db951ee",
+    "events/3893807.json": "3144ddff09a25dfe0986cd8fdfc404752cae2f508f683692c37431a9a50c6994",
+    "events/3893808.json": "0df29c7963182ad158edc844aa4a797e316dc1dbd705456a53948dde7e4a7596",
+    "events/3893809.json": "6991d417744238903f877eb405cae7691939b6053fb5bd47a9af0ce35e63b170",
+    "events/3893810.json": "98844e67faf3f570d6f884c449b1c644b3ed744f49a3032b04328dc8b242f5c7",
+    "events/3893811.json": "f3020c7cfd769cdb00c0af056b00680f942160bc53de9f125702e309fa859f33",
+    "events/3893812.json": "13185cfe9589b9552ede74da3cc406de4c7b8c9996d1ea89b309f90d8fbe84e9",
+    "events/3893813.json": "8a668450510eab7f79ffb92609e8cc483d946700334861f97c39a091a5b66cce",
+    "events/3893814.json": "f6cc0e92e314b960c6c8579251f260f3ca55e1701c670a73c37034c5d9c1a1a4",
+    "events/3893815.json": "055f8744846d1524f4c1d9e15205b22de3309d7f0637640ff26ff298b0cfe3ab",
+    "events/3893816.json": "877c990cf6cd44bae292336101b6edc5eda31e8b55cbc47635de2cb00fff77c8",
+    "events/3893817.json": "7fd33ffe2d5ad3a41467780fb389fed0bdd1b2e436f5e769eebe08dfba19a9a1",
+    "events/3893818.json": "5b40b1f7844959aaa689f03aefd2648382fe0026d4459d45607e87d952d14cfd",
+    "events/3893819.json": "6a5753f3c4b00b185ca9cbc8db6b6f5e6ff5e14c4f06e6530796ac398c96e614",
+    "events/3893820.json": "73b0c27f6b2c763fcb7b4316a94ba578d4231800b9eb1f143c592cf1ca351c29",
+    "events/3893821.json": "69794eda779e48101ba46c27ac5b1b810f0961c06698cff251ff3ae7afc1d712",
+    "events/3893822.json": "24c812c5ce88a2657e775c08396a57915a25012e19af0d8547e9c5f812a7e1f6",
+    "events/3893823.json": "2b1bc3beff0be0e5a45674d60303fe2c2f6bd2646b22e3d31e30ff830e3a6085",
+    "events/3893824.json": "518b893c54984d9e3a34b01a02d367d2e195d8a3f1a670bd5ccac39c6c6e0b31",
+    "events/3893825.json": "13e8887c8da6b922783ac1bfef50f75ec956edbe7617e7ae30c2fcd8f6f19702",
+    "events/3893826.json": "a61d711068b0dd8f3f56a01032fd0802c60f61d5f1eb57bb8c7b9eeaf1cf70da",
+    "events/3893827.json": "034b29cae15a3ebcbbf67c9c2836a07b641b62ca3ce82d3348a0b81d4969ff77",
+    "events/3893828.json": "91730a164ff67cd196d375cc419aed3faa7b76532e4c54b5b4e49cddc9a37679",
+    "events/3893829.json": "4ac8cf51cd0a4613754cc10c97a2c7b13f988767cf06356fa2fe314ed6b5c2c2",
+    "events/3893830.json": "d52a7b6374fd503439155517aa4b833d588eaaa78416cb5c23570eacccb05f45",
+    "events/3893831.json": "e5682f8a6c92805bc5cefa33236b52bf02a32a3cd7b8d98c097d90af069a3dab",
+    "events/3893832.json": "2483ad130cb2f2b3882e48be777fa67c105afbaf7679d554cf7dfad1c5ad1f9e",
+    "events/3893833.json": "7ae88ec8d4e5e4a410b4a95d53a5c744d90bf98377e888a3cf92dc2b1fe7667d",
+    "events/3893834.json": "1d4dafa5dfb04a0be8e636266f60260f368c65d4cf84429388a75fddb42858ef",
+    "events/3901733.json": "0815f375ad27b178217196d1b18e4a338485a8e95889a77be881c2f36b02d878",
+    "events/3901734.json": "8232cdd3de36ed72a68f6d2a8cbecba3538d5b097538a7464d3640cca5be443b",
+    "events/3901735.json": "0fdbd6e74b69be62c5791c87a56763e5d8fde3545a4749279c2fd45b2d9cd61e",
+    "events/3901736.json": "32d1680dc7a20cd28dd438a678eec0e43eba6d441f791113c38b244a80c60ed8",
+    "events/3901796.json": "940efe61f70044ed84d2bfd2152dc4883b72f2182c4908f1b1e383da69eff078",
+    "events/3901797.json": "1b2b85223d09e1eebe81020dc2ed5c8d1431d244f5c2ec721889c0f269142f56",
+    "events/3901832.json": "256b89a55572f23012c7afe15ff41a9c0b69d72c4b0825c8648b31c99357e1cf",
+    "events/3901833.json": "eb4f0ebac3662d2dc4ea386009f1fac4b597c2089142351a7cf055644fdb522d",
+    "events/3902239.json": "2157591f4a612336338dc341324bfc72b4b48ba646321bf5813e3c6ae2e91a34",
+    "events/3902240.json": "5accdcecad40b447ffa5f4ac24154fcdf33b89a93c84a74b5f56541c45a2306f",
+    "events/3902967.json": "f0c6124e775c6161d8857fa948a9545caf0d06c66e48e4ae77625b0803db824b",
+    "events/3902968.json": "605c25e4ce31d2d48b58be824b213d55e15e41f3a58c08e37866f58f33a9f123",
+    "events/3904628.json": "69be1318c3a57f2d788d1940b49c1d3adf3e551646d85e46c0a033e07a8381ca",
+    "events/3904629.json": "67feebf407c377999153b4b195f705d4effccc1a68eaa566af4c358c8f5426ce",
+    "events/3906389.json": "30768852f7f9924dae61780e432c05cf673f576055c4e87340ae206687b5daa2",
+    "events/3906390.json": "42ed44eb66f79f214bbeaa8bfba57ede42f5544a05c101bf844ced440999281a",
+    "lineups/3893787.json": "cd16666940cbbe8b68ebfdfa6b28415184966e936f4cde4d97708338a09b7ca9",
+    "lineups/3893788.json": "d8e2fcd5ef1a19fbdfa256d1cb4785bc59324897a80cf5ed7a0793973a7e9eca",
+    "lineups/3893789.json": "97bc415dc8abe1844ad52b8b689c7a67eb525c6f61f9fec307830ef62924388e",
+    "lineups/3893790.json": "5f47c36b015970c9acfa4e35a2c8ff65d9c32d849bf2de8b6b92080e0c8441f0",
+    "lineups/3893791.json": "2fd5d041c8bf094eb960f162e7da46d5053caebf77dc78ebab7b7095e69afbc0",
+    "lineups/3893792.json": "9659d45a22545421b43d44a5dd44690b715c0952e72671da97aa818baba522d8",
+    "lineups/3893793.json": "77d77489947372350d18e6fc10589b9ecbd1967f51b7774567a61feea1b51e06",
+    "lineups/3893794.json": "2f377a4cd28c5cdb0001fccef137eccdc36914b1b4f2b6c347fd37f17cde11ae",
+    "lineups/3893795.json": "39931bae314cab91ca34236b275638d13bb4a8f59485204bb689cfc33cde909c",
+    "lineups/3893796.json": "6ef69dc4d1dd0b565961c03f8c3109406481cc31e83e9e4f548aa7d83b78b8e2",
+    "lineups/3893797.json": "f34f490e86f7859b9c5f4a333a493ca078ef3cf4e3cf1e5869261238ae34777a",
+    "lineups/3893798.json": "1c13f06080c8b4078dc1a8e4cd1cce75f3dfd0cfbf9578027c31571eab3d5b5b",
+    "lineups/3893799.json": "f30982910ec525834f0b9d3c63d50a293d2339f7ac6d6889476d97ee1b6e4747",
+    "lineups/3893800.json": "685e12509bffacf9c1f085d14bfa805bc590aac55bec2ce0d54f980bc7e56333",
+    "lineups/3893801.json": "46fd5e22ece11b59c28168590af61c62e673588c0d2e4cc3aff546059393edf1",
+    "lineups/3893802.json": "7853404470e1b19ceac2540d0cb24c7a89331cdfd678b869bec09432529991e4",
+    "lineups/3893803.json": "519e4b1102d832bc7c1f6306443986fa4cadc8a5197f79a7632112268528d41f",
+    "lineups/3893804.json": "24abab4aff64176bca149eaab19e1b5fdfbb27b678c5379131e519dcce462275",
+    "lineups/3893805.json": "45dc5c514716045f19be6fdfb8571347d4bd63898181e9a787786506e26180ad",
+    "lineups/3893806.json": "6b8c9879b9428e6c460c2ff5d77e196f2c7add1f44186a371764bda28add647b",
+    "lineups/3893807.json": "0d594151a59f5ca74c029542a59050fe01953067e3d575dc757f39122e8cb6e3",
+    "lineups/3893808.json": "d76b6e9e2073647f9ae333d33e9f409a3a8a6714078102d28dfab0543ea34827",
+    "lineups/3893809.json": "5f0f458009abcd74b44fa386ef44ac15c7961f9889190c9d23ad5d80fd3805a7",
+    "lineups/3893810.json": "129d31e3e8e557d220da106b8b5b27581608e1b58037131488c1ce005e2b3d9f",
+    "lineups/3893811.json": "0d0bec28329cb88fd5b9dac3c595f41cac511f17b9d229c862d13a98d22c57a3",
+    "lineups/3893812.json": "d7b88b35dccf7732ab7e46a8b3253bbbab67bc0992e422bc5c9abee40610d32b",
+    "lineups/3893813.json": "ad905266a81005aa0a0293bb69bb285b8964e6ca41f9b9de01ae4812ed5d400f",
+    "lineups/3893814.json": "30efe19a4874a02802bf5cb150d6c99ce6c38ceee8562172e234c046c6f9d06c",
+    "lineups/3893815.json": "dd8b26b2c1197d35e66509151171f2eb4af78ae5380d94d0c9b28d12b1b33cd2",
+    "lineups/3893816.json": "78bfeebbeaa22815d3c29e0aa8f87dbc83d86ab75e1b9f2fdb4ea7663a554cae",
+    "lineups/3893817.json": "84724b96adaf0274c9206eb445654fdb05d5d48d5cc69ca89f77393ccbb8ddb6",
+    "lineups/3893818.json": "08a1c181c86c755bd451fabbb653688ac435b0e7dbc13073c739a04e1cce2e97",
+    "lineups/3893819.json": "55fb14c3bb24881baba322e722eb5a561fd90cbee7dc7c761639558dc8f04870",
+    "lineups/3893820.json": "a29e6ca238f821d3f70442b4e20d0a03ded52e99d152cf0981f0bb9db4bb46f9",
+    "lineups/3893821.json": "9889bbfe8f7456b0a6901d8dc4da81abf1898de4b7a493bf49c77c015a2cd636",
+    "lineups/3893822.json": "758aba63003bb10494ae7d5be7e3afc9683c41b4654372d1593e4042992d9732",
+    "lineups/3893823.json": "9fb148190c5db5b047bf625f92b7c00e2e632bc9db32a71f8fa1d96fdd82ef04",
+    "lineups/3893824.json": "dce863ed2310e2cf1321fba0db5452472adc882450d281776fceb500cb6c8265",
+    "lineups/3893825.json": "94bd2c3f1f701a658776ed85c66e5867d0a42b0fb4899ff384fffcd01f99a38c",
+    "lineups/3893826.json": "bb461d2e64945d48e45b27f5033714f0dbbdde49aba084f9b09f291c2dcd0afa",
+    "lineups/3893827.json": "3238b8aaf9f38d26f38d7d542ab5aa6b2221e6a70edbb8a4de504149e7aa4390",
+    "lineups/3893828.json": "f01f2f7f22cc88cd25d5feea358ac05e2de779fce5220a67b6eb2e8e5b04915b",
+    "lineups/3893829.json": "8376f9b3542f3cac0869f6cd6231879948c0891a236ff551544ba5b096d3ce33",
+    "lineups/3893830.json": "6c4aa68c0bcd3de88e338a453318f527e395157c119456033a4146937f593f4e",
+    "lineups/3893831.json": "f553d722b5a9bdb07e0de38c14f35b9610c48fa4fc396d02b6281836098810c4",
+    "lineups/3893832.json": "b74180c055acf25716c726b5354d6718fe15d204654739cf19ddf8a609ed67cd",
+    "lineups/3893833.json": "e0b130b918adf35fc173357bf1ab057cd188a39d62fd64ace626b01af5391cc7",
+    "lineups/3893834.json": "e9ede4f5225a94fd224d208ff6c927812eb57f94349bc7b776fa1effe7b6ad0d",
+    "lineups/3901733.json": "4c34c6bd816b9bcfc88ce3aae1d387a1f8099c2176f122332834bd5a0e013d28",
+    "lineups/3901734.json": "ab00594ee063b9dbb5c4935a4313baef8399eb43822db1a915f290a05f12c51d",
+    "lineups/3901735.json": "9708820850a96eb2a9ee3bf99ba9b55f31f28b8a89951dd1ae5cc552912d17ef",
+    "lineups/3901736.json": "e43e2da3ecc9908a9c13a05298c386269a7ee17d22989b246e600436a779d071",
+    "lineups/3901796.json": "66b7cb2faa77839942d3e76fa4974c9850a1660a14bd3edb7cda414859dbb1ba",
+    "lineups/3901797.json": "fb12fc77622aba78a56c774bdecd5ea3fd602669cc53d0bb8498e451b5b0df1a",
+    "lineups/3901832.json": "52ec5eb0643ad61ccf71d2c65cface8ab1ce534eb31675b19b1bf8e4f1bb9a98",
+    "lineups/3901833.json": "baead6680ea1f0d6777615ddf4b19d3f6427758157c9d47f248c2ea613f31a55",
+    "lineups/3902239.json": "b15c306ef9450f6bbc4dd57a89152e36837a1fd7298e0b7998821dc00806eb4c",
+    "lineups/3902240.json": "dd725e55341c301efb07e38997667f823779c77d137f590c407aac32adfb79c8",
+    "lineups/3902967.json": "97d417a98fc5d9cdd89aa90cc23580784474b3d50599e5db802188bbef61eb20",
+    "lineups/3902968.json": "a1905c581ac495bf1ef6420ad74baca9702bddc93b17c10b5a86e272eb54ae3e",
+    "lineups/3904628.json": "03ecf9a35934afee27df8b36c5e1ecea8d0d45c385209c59d81f0e048e970ce6",
+    "lineups/3904629.json": "7f472c23513c2779bf984ebe4da0f463fa4c16f8c4fa944e79230b9050483feb",
+    "lineups/3906389.json": "24087420683c937ddd407db704b690fe92ff9afd440da279117cb516617ad67c",
+    "lineups/3906390.json": "8dbf4752ba2b9d5655fe52f7f1fc2fdd627d88ff014a351235066025d1b4253e",
+    "matches/72/107.json": "55af7b1e0ba323e8b277467673856cf1549417159d677ba11718814bfa19f9b9"
+  },
+  "implementation_sha256": {
+    "benchmark_prepare.py": "96e6a549d92fb46e0ebe6960232b748f97b77de42548c20b356a7692e60f6b92",
+    "benchmarks.py": "84c072dde70aa912f63216e00168a641699b2ef002d9ad827ef8ad4dd7577874",
+    "player_analytics.py": "090323f3979c3d78dad0fc21afcd66b46dc3e74fb69bbfd90601de5633c4977e",
+    "player_comparison.py": "9900ac07418c3248d2e65a3a7c91868f1581891057b2c6e6e2edddd9754af9c4",
+    "playing_time.py": "b0309f5e01f791ec6faec4e2c88efaabd34ed1113cd2dd31c6757eb5c350f624",
+    "metrics.py": "e1d85fc7c96f2a96ab2e2ec2112955785230092f6308211e034cfd3c65fb761b",
+    "progressive.py": "6e7f5d003952551453e96fdc1ad030c5391ce8a99d873f47f74ce8c1538cac51"
+  },
+  "upstream_revision": "4b73468fc5b0f1950f9f66fada70ad3a4f9327cb",
+  "dependencies": {
+    "statsbombpy": "1.22.0",
+    "pandas": "3.0.6"
+  },
+  "competition_id": 72,
+  "season_id": 107,
+  "minimum_minutes": 450,
+  "minimum_samples": 20,
+  "schema_version": "benchmark-v1",
+  "position_policy": "unanimous-broad-group-v1",
+  "missing_files": [],
+  "dataset_version": "756ef68a5aceb463ad45fcc6962c7f215dadc078ff5e21ea056a26494b8b3808",
+  "match_ids": [
+    3893787,
+    3893788,
+    3893789,
+    3893790,
+    3893791,
+    3893792,
+    3893793,
+    3893794,
+    3893795,
+    3893796,
+    3893797,
+    3893798,
+    3893799,
+    3893800,
+    3893801,
+    3893802,
+    3893803,
+    3893804,
+    3893805,
+    3893806,
+    3893807,
+    3893808,
+    3893809,
+    3893810,
+    3893811,
+    3893812,
+    3893813,
+    3893814,
+    3893815,
+    3893816,
+    3893817,
+    3893818,
+    3893819,
+    3893820,
+    3893821,
+    3893822,
+    3893823,
+    3893824,
+    3893825,
+    3893826,
+    3893827,
+    3893828,
+    3893829,
+    3893830,
+    3893831,
+    3893832,
+    3893833,
+    3893834,
+    3901733,
+    3901734,
+    3901735,
+    3901736,
+    3901796,
+    3901797,
+    3901832,
+    3901833,
+    3902239,
+    3902240,
+    3902967,
+    3902968,
+    3904628,
+    3904629,
+    3906389,
+    3906390
+  ],
+  "matches": [
+    {
+      "match_id": 3893787,
+      "lineup_teams": [
+        852,
+        1215
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 18,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893788,
+      "lineup_teams": [
+        1205,
+        16768
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 19,
+        "verified": 26
+      }
+    },
+    {
+      "match_id": 3893789,
+      "lineup_teams": [
+        860,
+        1106
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 17,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893790,
+      "lineup_teams": [
+        1206,
+        1213
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 13,
+        "verified": 27
+      }
+    },
+    {
+      "match_id": 3893791,
+      "lineup_teams": [
+        863,
+        1832
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 16,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3893792,
+      "lineup_teams": [
+        1214,
+        16769
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 14,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893793,
+      "lineup_teams": [
+        1210,
+        6045
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 16,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893794,
+      "lineup_teams": [
+        865,
+        2355
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 19,
+        "verified": 24
+      }
+    },
+    {
+      "match_id": 3893795,
+      "lineup_teams": [
+        853,
+        1207
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 17,
+        "verified": 27
+      }
+    },
+    {
+      "match_id": 3893796,
+      "lineup_teams": [
+        858,
+        1216
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 17,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893797,
+      "lineup_teams": [
+        851,
+        864
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 17,
+        "verified": 25
+      }
+    },
+    {
+      "match_id": 3893798,
+      "lineup_teams": [
+        861,
+        1212
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 20,
+        "verified": 23
+      }
+    },
+    {
+      "match_id": 3893799,
+      "lineup_teams": [
+        857,
+        2391
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 14,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3893800,
+      "lineup_teams": [
+        855,
+        1204
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 18,
+        "verified": 24
+      }
+    },
+    {
+      "match_id": 3893801,
+      "lineup_teams": [
+        1203,
+        16803
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 13,
+        "verified": 32
+      }
+    },
+    {
+      "match_id": 3893802,
+      "lineup_teams": [
+        1211,
+        16802
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 5,
+        "unused_substitute": 18,
+        "verified": 23
+      }
+    },
+    {
+      "match_id": 3893803,
+      "lineup_teams": [
+        1106,
+        1215
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 16,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3893804,
+      "lineup_teams": [
+        852,
+        860
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 16,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3893805,
+      "lineup_teams": [
+        1210,
+        1832
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 16,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893806,
+      "lineup_teams": [
+        863,
+        6045
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 14,
+        "verified": 27
+      }
+    },
+    {
+      "match_id": 3893807,
+      "lineup_teams": [
+        1206,
+        16768
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 14,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893808,
+      "lineup_teams": [
+        851,
+        1214
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 19,
+        "verified": 23
+      }
+    },
+    {
+      "match_id": 3893809,
+      "lineup_teams": [
+        1205,
+        1213
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 16,
+        "verified": 25
+      }
+    },
+    {
+      "match_id": 3893810,
+      "lineup_teams": [
+        864,
+        16769
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 15,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893811,
+      "lineup_teams": [
+        853,
+        865
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 17,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893812,
+      "lineup_teams": [
+        1204,
+        1216
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 15,
+        "verified": 27
+      }
+    },
+    {
+      "match_id": 3893813,
+      "lineup_teams": [
+        1207,
+        2355
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 14,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893814,
+      "lineup_teams": [
+        855,
+        858
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 14,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893815,
+      "lineup_teams": [
+        861,
+        1203
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 17,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893816,
+      "lineup_teams": [
+        1212,
+        16803
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 14,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893817,
+      "lineup_teams": [
+        860,
+        1215
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 15,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893818,
+      "lineup_teams": [
+        857,
+        16802
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 17,
+        "verified": 26
+      }
+    },
+    {
+      "match_id": 3893819,
+      "lineup_teams": [
+        1211,
+        2391
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 15,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893820,
+      "lineup_teams": [
+        852,
+        1106
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 14,
+        "verified": 32
+      }
+    },
+    {
+      "match_id": 3893821,
+      "lineup_teams": [
+        1205,
+        1206
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 15,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893822,
+      "lineup_teams": [
+        863,
+        1210
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 14,
+        "verified": 32
+      }
+    },
+    {
+      "match_id": 3893823,
+      "lineup_teams": [
+        1832,
+        6045
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 18,
+        "verified": 26
+      }
+    },
+    {
+      "match_id": 3893824,
+      "lineup_teams": [
+        1213,
+        16768
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 17,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893825,
+      "lineup_teams": [
+        853,
+        2355
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 17,
+        "verified": 26
+      }
+    },
+    {
+      "match_id": 3893826,
+      "lineup_teams": [
+        864,
+        1214
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 15,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3893827,
+      "lineup_teams": [
+        851,
+        16769
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 14,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3893828,
+      "lineup_teams": [
+        865,
+        1207
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 13,
+        "verified": 31
+      }
+    },
+    {
+      "match_id": 3893829,
+      "lineup_teams": [
+        861,
+        16803
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 16,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3893830,
+      "lineup_teams": [
+        858,
+        1204
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 13,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3893831,
+      "lineup_teams": [
+        855,
+        1216
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 14,
+        "verified": 27
+      }
+    },
+    {
+      "match_id": 3893832,
+      "lineup_teams": [
+        1203,
+        1212
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 18,
+        "verified": 25
+      }
+    },
+    {
+      "match_id": 3893833,
+      "lineup_teams": [
+        857,
+        1211
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 15,
+        "verified": 25
+      }
+    },
+    {
+      "match_id": 3893834,
+      "lineup_teams": [
+        2391,
+        16802
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 4,
+        "unused_substitute": 19,
+        "verified": 23
+      }
+    },
+    {
+      "match_id": 3901733,
+      "lineup_teams": [
+        860,
+        863
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 14,
+        "verified": 31
+      }
+    },
+    {
+      "match_id": 3901734,
+      "lineup_teams": [
+        852,
+        1210
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 19,
+        "verified": 27
+      }
+    },
+    {
+      "match_id": 3901796,
+      "lineup_teams": [
+        851,
+        1216
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 13,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3901797,
+      "lineup_teams": [
+        858,
+        1214
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 15,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3901735,
+      "lineup_teams": [
+        865,
+        1213
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 16,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3901736,
+      "lineup_teams": [
+        853,
+        1205
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 15,
+        "verified": 29
+      }
+    },
+    {
+      "match_id": 3901832,
+      "lineup_teams": [
+        1212,
+        16802
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 16,
+        "verified": 26
+      }
+    },
+    {
+      "match_id": 3901833,
+      "lineup_teams": [
+        861,
+        2391
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 16,
+        "verified": 30
+      }
+    },
+    {
+      "match_id": 3902239,
+      "lineup_teams": [
+        858,
+        1210
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 15,
+        "verified": 31
+      }
+    },
+    {
+      "match_id": 3902240,
+      "lineup_teams": [
+        851,
+        863
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 12,
+        "verified": 31
+      }
+    },
+    {
+      "match_id": 3902967,
+      "lineup_teams": [
+        865,
+        16802
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 18,
+        "verified": 27
+      }
+    },
+    {
+      "match_id": 3902968,
+      "lineup_teams": [
+        861,
+        1205
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 3,
+        "unused_substitute": 18,
+        "verified": 25
+      }
+    },
+    {
+      "match_id": 3904628,
+      "lineup_teams": [
+        858,
+        863
+      ],
+      "minutes_status_counts": {
+        "unused_substitute": 17,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3904629,
+      "lineup_teams": [
+        865,
+        1205
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 17,
+        "verified": 26
+      }
+    },
+    {
+      "match_id": 3906389,
+      "lineup_teams": [
+        858,
+        1205
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 1,
+        "unused_substitute": 17,
+        "verified": 28
+      }
+    },
+    {
+      "match_id": 3906390,
+      "lineup_teams": [
+        863,
+        865
+      ],
+      "minutes_status_counts": {
+        "temporary_absence_unsupported": 2,
+        "unused_substitute": 18,
+        "verified": 26
+      }
+    }
+  ],
+  "cohorts": [
+    {
+      "group": "goalkeeper",
+      "eligible_contexts": 7,
+      "eligible_player_ids": [
+        15615,
+        25627,
+        31538,
+        32339,
+        42787,
+        46344,
+        62713
+      ],
+      "metric_samples": {
+        "passes": 7,
+        "completed_passes": 7,
+        "completed_progressive_passes": 7,
+        "shots": 7,
+        "goals": 7,
+        "xg": 0,
+        "successful_dribbles": 7,
+        "successful_interceptions": 7
+      },
+      "ready_metrics": []
+    },
+    {
+      "group": "centre_back",
+      "eligible_contexts": 6,
+      "eligible_player_ids": [
+        10165,
+        10645,
+        15257,
+        25638,
+        26092,
+        403277
+      ],
+      "metric_samples": {
+        "passes": 6,
+        "completed_passes": 6,
+        "completed_progressive_passes": 6,
+        "shots": 6,
+        "goals": 6,
+        "xg": 5,
+        "successful_dribbles": 6,
+        "successful_interceptions": 6
+      },
+      "ready_metrics": []
+    },
+    {
+      "group": "full_back",
+      "eligible_contexts": 4,
+      "eligible_player_ids": [
+        25624,
+        46639,
+        49836,
+        62962
+      ],
+      "metric_samples": {
+        "passes": 4,
+        "completed_passes": 4,
+        "completed_progressive_passes": 4,
+        "shots": 4,
+        "goals": 4,
+        "xg": 4,
+        "successful_dribbles": 4,
+        "successful_interceptions": 4
+      },
+      "ready_metrics": []
+    },
+    {
+      "group": "midfield",
+      "eligible_contexts": 11,
+      "eligible_player_ids": [
+        4643,
+        4658,
+        4979,
+        10220,
+        10221,
+        10272,
+        10654,
+        15284,
+        49835,
+        49904,
+        62666
+      ],
+      "metric_samples": {
+        "passes": 11,
+        "completed_passes": 11,
+        "completed_progressive_passes": 11,
+        "shots": 11,
+        "goals": 11,
+        "xg": 10,
+        "successful_dribbles": 11,
+        "successful_interceptions": 11
+      },
+      "ready_metrics": []
+    },
+    {
+      "group": "wide_forward",
+      "eligible_contexts": 1,
+      "eligible_player_ids": [
+        10161
+      ],
+      "metric_samples": {
+        "passes": 1,
+        "completed_passes": 1,
+        "completed_progressive_passes": 1,
+        "shots": 1,
+        "goals": 1,
+        "xg": 1,
+        "successful_dribbles": 1,
+        "successful_interceptions": 1
+      },
+      "ready_metrics": []
+    },
+    {
+      "group": "striker",
+      "eligible_contexts": 2,
+      "eligible_player_ids": [
+        10137,
+        47521
+      ],
+      "metric_samples": {
+        "passes": 2,
+        "completed_passes": 2,
+        "completed_progressive_passes": 2,
+        "shots": 2,
+        "goals": 2,
+        "xg": 2,
+        "successful_dribbles": 2,
+        "successful_interceptions": 2
+      },
+      "ready_metrics": []
+    }
+  ],
+  "summary": {
+    "player_contexts": 736,
+    "unique_players": 736,
+    "teams": 32,
+    "ambiguous_or_missing_position_contexts": 366,
+    "unknown_minutes_contexts": 105
+  },
+  "policy_sensitivity": [
+    {
+      "minimum_minutes": 180,
+      "cohorts": [
+        {
+          "group": "goalkeeper",
+          "eligible_contexts": 32,
+          "metric_samples": {
+            "passes": 32,
+            "completed_passes": 32,
+            "completed_progressive_passes": 32,
+            "shots": 32,
+            "goals": 32,
+            "xg": 1,
+            "successful_dribbles": 32,
+            "successful_interceptions": 32
+          },
+          "ready_at_10": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions"
+          ],
+          "ready_at_20": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions"
+          ]
+        },
+        {
+          "group": "centre_back",
+          "eligible_contexts": 35,
+          "metric_samples": {
+            "passes": 35,
+            "completed_passes": 35,
+            "completed_progressive_passes": 35,
+            "shots": 35,
+            "goals": 35,
+            "xg": 23,
+            "successful_dribbles": 35,
+            "successful_interceptions": 35
+          },
+          "ready_at_10": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ],
+          "ready_at_20": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ]
+        },
+        {
+          "group": "full_back",
+          "eligible_contexts": 27,
+          "metric_samples": {
+            "passes": 27,
+            "completed_passes": 27,
+            "completed_progressive_passes": 27,
+            "shots": 27,
+            "goals": 27,
+            "xg": 20,
+            "successful_dribbles": 27,
+            "successful_interceptions": 27
+          },
+          "ready_at_10": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ],
+          "ready_at_20": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ]
+        },
+        {
+          "group": "midfield",
+          "eligible_contexts": 58,
+          "metric_samples": {
+            "passes": 58,
+            "completed_passes": 58,
+            "completed_progressive_passes": 58,
+            "shots": 58,
+            "goals": 58,
+            "xg": 47,
+            "successful_dribbles": 58,
+            "successful_interceptions": 58
+          },
+          "ready_at_10": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ],
+          "ready_at_20": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ]
+        },
+        {
+          "group": "wide_forward",
+          "eligible_contexts": 6,
+          "metric_samples": {
+            "passes": 6,
+            "completed_passes": 6,
+            "completed_progressive_passes": 6,
+            "shots": 6,
+            "goals": 6,
+            "xg": 6,
+            "successful_dribbles": 6,
+            "successful_interceptions": 6
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "striker",
+          "eligible_contexts": 11,
+          "metric_samples": {
+            "passes": 11,
+            "completed_passes": 11,
+            "completed_progressive_passes": 11,
+            "shots": 11,
+            "goals": 11,
+            "xg": 11,
+            "successful_dribbles": 11,
+            "successful_interceptions": 11
+          },
+          "ready_at_10": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ],
+          "ready_at_20": []
+        }
+      ]
+    },
+    {
+      "minimum_minutes": 450,
+      "cohorts": [
+        {
+          "group": "goalkeeper",
+          "eligible_contexts": 7,
+          "metric_samples": {
+            "passes": 7,
+            "completed_passes": 7,
+            "completed_progressive_passes": 7,
+            "shots": 7,
+            "goals": 7,
+            "xg": 0,
+            "successful_dribbles": 7,
+            "successful_interceptions": 7
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "centre_back",
+          "eligible_contexts": 6,
+          "metric_samples": {
+            "passes": 6,
+            "completed_passes": 6,
+            "completed_progressive_passes": 6,
+            "shots": 6,
+            "goals": 6,
+            "xg": 5,
+            "successful_dribbles": 6,
+            "successful_interceptions": 6
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "full_back",
+          "eligible_contexts": 4,
+          "metric_samples": {
+            "passes": 4,
+            "completed_passes": 4,
+            "completed_progressive_passes": 4,
+            "shots": 4,
+            "goals": 4,
+            "xg": 4,
+            "successful_dribbles": 4,
+            "successful_interceptions": 4
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "midfield",
+          "eligible_contexts": 11,
+          "metric_samples": {
+            "passes": 11,
+            "completed_passes": 11,
+            "completed_progressive_passes": 11,
+            "shots": 11,
+            "goals": 11,
+            "xg": 10,
+            "successful_dribbles": 11,
+            "successful_interceptions": 11
+          },
+          "ready_at_10": [
+            "completed_passes",
+            "completed_progressive_passes",
+            "goals",
+            "passes",
+            "shots",
+            "successful_dribbles",
+            "successful_interceptions",
+            "xg"
+          ],
+          "ready_at_20": []
+        },
+        {
+          "group": "wide_forward",
+          "eligible_contexts": 1,
+          "metric_samples": {
+            "passes": 1,
+            "completed_passes": 1,
+            "completed_progressive_passes": 1,
+            "shots": 1,
+            "goals": 1,
+            "xg": 1,
+            "successful_dribbles": 1,
+            "successful_interceptions": 1
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "striker",
+          "eligible_contexts": 2,
+          "metric_samples": {
+            "passes": 2,
+            "completed_passes": 2,
+            "completed_progressive_passes": 2,
+            "shots": 2,
+            "goals": 2,
+            "xg": 2,
+            "successful_dribbles": 2,
+            "successful_interceptions": 2
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        }
+      ]
+    },
+    {
+      "minimum_minutes": 900,
+      "cohorts": [
+        {
+          "group": "goalkeeper",
+          "eligible_contexts": 0,
+          "metric_samples": {
+            "passes": 0,
+            "completed_passes": 0,
+            "completed_progressive_passes": 0,
+            "shots": 0,
+            "goals": 0,
+            "xg": 0,
+            "successful_dribbles": 0,
+            "successful_interceptions": 0
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "centre_back",
+          "eligible_contexts": 0,
+          "metric_samples": {
+            "passes": 0,
+            "completed_passes": 0,
+            "completed_progressive_passes": 0,
+            "shots": 0,
+            "goals": 0,
+            "xg": 0,
+            "successful_dribbles": 0,
+            "successful_interceptions": 0
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "full_back",
+          "eligible_contexts": 0,
+          "metric_samples": {
+            "passes": 0,
+            "completed_passes": 0,
+            "completed_progressive_passes": 0,
+            "shots": 0,
+            "goals": 0,
+            "xg": 0,
+            "successful_dribbles": 0,
+            "successful_interceptions": 0
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "midfield",
+          "eligible_contexts": 0,
+          "metric_samples": {
+            "passes": 0,
+            "completed_passes": 0,
+            "completed_progressive_passes": 0,
+            "shots": 0,
+            "goals": 0,
+            "xg": 0,
+            "successful_dribbles": 0,
+            "successful_interceptions": 0
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "wide_forward",
+          "eligible_contexts": 0,
+          "metric_samples": {
+            "passes": 0,
+            "completed_passes": 0,
+            "completed_progressive_passes": 0,
+            "shots": 0,
+            "goals": 0,
+            "xg": 0,
+            "successful_dribbles": 0,
+            "successful_interceptions": 0
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        },
+        {
+          "group": "striker",
+          "eligible_contexts": 0,
+          "metric_samples": {
+            "passes": 0,
+            "completed_passes": 0,
+            "completed_progressive_passes": 0,
+            "shots": 0,
+            "goals": 0,
+            "xg": 0,
+            "successful_dribbles": 0,
+            "successful_interceptions": 0
+          },
+          "ready_at_10": [],
+          "ready_at_20": []
+        }
+      ]
+    }
+  ],
+  "minutes_status_counts": {
+    "temporary_absence_unsupported": 124,
+    "unused_substitute": 1018,
+    "verified": 1778
+  },
+  "metric_coverage": {
+    "passes": 514,
+    "completed_passes": 514,
+    "completed_progressive_passes": 514,
+    "shots": 514,
+    "goals": 514,
+    "xg": 302,
+    "successful_dribbles": 514,
+    "successful_interceptions": 514
+  }
+}

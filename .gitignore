@@ -14,3 +14,4 @@ research/xt-data/
 research/xt/
 
 .pytest-*/
+research/benchmarks/
